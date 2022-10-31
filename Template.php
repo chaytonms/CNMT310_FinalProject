@@ -13,7 +13,7 @@ class Template {
     protected $tailElements = array();
 
 
-    function __construct($title) {
+    public function __construct($title) {
         $this->title = $title;
         $this->head = "<!doctype html>\n<head lang=\"en\">"; // insert default header code here
         $this->body = "</head>\n<body>\n"; // insert end of head + start of body here
@@ -25,7 +25,7 @@ class Template {
      * adds element to head, such as a link or script tag
      * 
      */
-    function addHeadElement($el) {
+    public function addHeadElement($el) {
         $this->headElements[] = $el . "\n";
     }
 
@@ -34,7 +34,7 @@ class Template {
      * adds element to body, before any specialty HTML is added
      * Example of such is a nav bar
      */
-    function addBodyElement($el) {
+    public function addBodyElement($el) {
         $this->bodyElements[] = $el . "\n";
     }
 
@@ -43,7 +43,7 @@ class Template {
      * adds an element to the body, but after all specialty HTML is added
      * Things that would be in the tail would be like a footer
      */
-    function addTailElement($el) {
+    public function addTailElement($el) {
         $this->tailElements[] = $el . "\n";
     }
 
@@ -52,7 +52,7 @@ class Template {
      * returns the modulated head and body data.
      * To be called before adding page-specific HTML
      */
-    function beginHTML() {
+    public function beginHTML() {
         $output = $this->head;
         foreach ($this->headElements as $he) {
             $output .= "\t" . $he . "\n";
@@ -70,7 +70,7 @@ class Template {
      * returns the modulated "tail" (after body) data.
      * To be called after adding page-specific HTML
      */
-    function closeHTML() {
+    public function closeHTML() {
         $output = $this->tail;
         foreach ($this->tailElements as $te) {
             $output .= "\t" . $te . "\n";
