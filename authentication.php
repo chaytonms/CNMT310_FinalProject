@@ -40,7 +40,7 @@ $json = (object) json_decode($client->send());
 $role = $json->data->user_role;
 
 // checks to ensure that it was a success
-if (!isset($json->result) || !isset($json->data) || !isset($json->data->user_role)  ) {
+if (!isset($json->result) || !isset($json->data) || !isset($json->data->user_role) || $json-> result != "Success") {
     $_SESSION['errors'] = array("Account not found");
     die(header("Location: index.php"));
 }
@@ -48,7 +48,7 @@ if (!isset($json->result) || !isset($json->data) || !isset($json->data->user_rol
 $_SESSION['role'] = $role;
 
 //For Debugging:
-//var_dump($client);
+//var_dump($json);
 
 die(header("Location: dashboard.php"));
 
