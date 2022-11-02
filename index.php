@@ -13,12 +13,11 @@ print $template->beginHTML() . $template->openLeftPane();
 
 print "<h4>Testing</h4>";
 
-//if (!isset($_SESSION['errors'])) {
-//    foreach ($_SESSION['errors'] as $e) {
-//        print "<p>$e</p>";
-//    }
-//}
-print var_dump($_SESSION['errors']);
+if (isset($_SESSION['errors'])) {
+    foreach ($_SESSION['errors'] as $e) {
+        print "<p class=\"error\">$e</p>";
+    }
+}
 
 print $template->closeLeftOpenRightPane();
 
@@ -28,6 +27,6 @@ print "
     Password: <input name=\"password\" id=\"password\"/><br/>
     <input type=\"submit\" name=\"submitform\" value=\"Submit\">
 </form>
-";
+<a href=\"dashboard.php\">Continue as Guest</a>";
 print $template->closeRightPane() . $template->closeHTML();
 ?>

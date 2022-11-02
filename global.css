@@ -25,3 +25,7 @@ input {
     border-radius:5px;
     border-color:darkgray;
 }
+
+.error {
+    color: red;
+}
