@@ -1,6 +1,12 @@
+body {
+    background: rgb(245, 240, 240);
+    margin: 0;
+    overflow: hidden;
+}
+
 div.col-3 {
     border-right: 2px solid darkgray;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 50px);
     align-content: center;
 }
 
@@ -13,4 +19,9 @@ div.col-9 {
     padding-left: 25px;
     align-content: center;
     
+}
+
+input {
+    border-radius:5px;
+    border-color:darkgray;
 }

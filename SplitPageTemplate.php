@@ -1,7 +1,7 @@
 <?php
     require_once('Template.php');
     class SplitPageTemplate extends Template {
-        protected $LEFT_WIDTH = 3;
+        protected $LEFT_WIDTH = 3; // the width of the left pane, taking up x out of the 12 slots in a bootstrap row
 
         /**
          * function openLeftPane 
