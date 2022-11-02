@@ -1,15 +1,20 @@
 <?php
+session_start();
 require_once("WebServiceClient.php");
-require_once("Template.php");
 
 if (!isset($_POST['username']) || !isset($_POST['password'])) {
     //die(header("Location: index.php"));
     var_dump($_POST);
 }
 
+if (!isset($_SESSION['role'])) {
+    $_SESSION['errors'] = array("Please log in.");
+    die(header("Location: index.php"));
+}
+
 $url = "http://cnmt310.classconvo.com/classreg/";
 $client = new WebServiceClient($url);
-$template = new Template("Auth");
+
 
 //Default is to POST. If you need to change to a GET, here's how:
 $client->setMethod("GET");
@@ -31,13 +36,20 @@ $data = array("apikey" => $apikey,
              );
 
 $client->setPostFields($data);
+$json = (object) json_decode($client->send());
+$role = $json->data->user_role;
+
+// checks to ensure that it was a success
+if (!isset($json->result) || !isset($json->data) || !isset($json->data->user_role)  ) {
+    $_SESSION['errors'] = array("Account not found");
+    die(header("Location: index.php"));
+}
+
+$_SESSION['role'] = $role;
+
 //For Debugging:
 //var_dump($client);
 
-$template->addBodyElement("<p>Hello!</>");
-
-print $template->beginHTML();
-print var_dump(json_decode($client->send()));
-print $template->closeHTML();
+die(header("Location: dashboard.php"));
 
 ?>
