@@ -7,21 +7,30 @@ class Template {
     protected $head; //stuff in the head tags 
     protected $body; // stuff in the body tag before addition ie nav bars
     protected $tail; // stuff after additions to body, choses it, and adds footers
+    
+    // insert default header code here
+    protected $headElements = array("<!doctype html>", 
+                                    "<head lang=\"en\">",
+                                    "<link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi\" crossorigin=\"anonymous\">",
+                                    "<link href=\"global.css\" rel=\"stylesheet\">",    
+                                );
+    
+    // insert end of head + start of body here
+    protected $bodyElements = array("</head>", "<body>");
 
-    protected $headElements = array();
-    protected $bodyElements = array();
-    protected $tailElements = array();
+    // add default end of body here
+    protected $tailElements = array('<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>',
+                                    
+                                    );
 
 
     public function __construct($title) {
         $this->title = $title;
-        $this->head = "<!doctype html>\n<head lang=\"en\">"; // insert default header code here
-        $this->body = "</head>\n<body>\n"; // insert end of head + start of body here
-        $this->tail = ""; // add default end of body here
     }
 
     /**
      * function addHeadElements ($el)
+     * Returns: String
      * adds element to head, such as a link or script tag
      * 
      */
@@ -31,6 +40,7 @@ class Template {
 
     /**
      * function addBodyElements ($el)
+     * Returns: String
      * adds element to body, before any specialty HTML is added
      * Example of such is a nav bar
      */
@@ -40,6 +50,7 @@ class Template {
 
     /**
      * function addTailElement($el)
+     * Returns: String
      * adds an element to the body, but after all specialty HTML is added
      * Things that would be in the tail would be like a footer
      */
@@ -49,6 +60,7 @@ class Template {
 
     /** 
      * function beginHTML()
+     * Returns: String
      * returns the modulated head and body data.
      * To be called before adding page-specific HTML
      */
@@ -67,6 +79,7 @@ class Template {
 
     /** 
      * function closeHTML()
+     * Returns: String
      * returns the modulated "tail" (after body) data.
      * To be called after adding page-specific HTML
      */

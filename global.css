@@ -1,0 +1,16 @@
+div.col-3 {
+    border-right: 2px solid darkgray;
+    height: calc(100vh - 100px);
+    align-content: center;
+}
+
+div.container {
+    margin: 25px;
+    height:100vh;
+}
+
+div.col-9 {
+    padding-left: 25px;
+    align-content: center;
+    
+}
