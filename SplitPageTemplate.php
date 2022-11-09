@@ -1,7 +1,7 @@
 <?php
     require_once('Template.php');
     class SplitPageTemplate extends Template {
-        protected $LEFT_WIDTH = 3; // the width of the left pane, taking up x out of the 12 slots in a bootstrap row
+        //protected $LEFT_WIDTH = 3; // the width of the left pane, taking up x out of the 12 slots in a bootstrap row
 
         /**
          * function openLeftPane 
@@ -14,7 +14,7 @@
         public function openLeftPane() {
             $output = '<div class="container">
                 <div class="row">
-                    <div class="col-' . $this->LEFT_WIDTH . '">';
+                    <div class="col-sm-4">';
             return $output;
 
         }
@@ -28,7 +28,7 @@
          * Close with closeRightPane()
          */
         public function closeLeftOpenRightPane() {
-            return '</div><div class="col-' . 12 - $this->LEFT_WIDTH . '">';
+            return '</div><div class="col-lg">';
         }
 
         /**

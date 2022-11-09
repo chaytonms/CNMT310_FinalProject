@@ -14,30 +14,44 @@ print $template->beginHTML();
 print "
 <div class=\"hazy\"> 
     <div class=\"white-overlay align-items-center mt\">
-    <h4> Welcome! Sign in </h4>";
+    <div class=\"align-items-center align-self-center justify-content-center\">
+        <h2 class=\"d-flex justify-content-center\"> Welcome! Sign in </h4>";
 
 if (isset($_SESSION['errors'])) {
     foreach ($_SESSION['errors'] as $e) {
-        print "<p class=\"error\">$e</p>";
+        print "<p class=\"error big-text\">$e</p>";
     }
 }
 print "
-        <div>
+        
             <form method=\"POST\" action=\"authentication.php\">
-                <div class=\"container\"> <div class=\"row\">
-                <div class=\"col-6 float-left\">
-                    <p>Username:</p>
-                    <p>Password: </p>
-                    <input type=\"submit\" name=\"submitform\" value=\"Submit\">
-                </div>
-                <div class=\"col-6\">
-                    <input name=\"username\" id=\"username\"/><br/>
-                    <input name=\"password\" id=\"password\"/><br/>
-                </div>
+                <div class=\"container-fluid\"> 
+                    <div class=\"row mt-2 g-2\">
+                        <div class=\"col d-block float-left\">
+                            <p class=\"big-text\">Username:</p>
+                        </div>
+                        <div class=\"col d-block float-right\">
+                            <input class=\"d-flex float-right\" name=\"username\" id=\"username\"/>
+                        </div>
+                    </div>
+                    <div class=\"row mt-2 g-2\">
+                        <div class=\"col d-block float-left\">
+                            <p class=\"big-text\">Password: </p>
+                        </div>
+                        <div class=\"col d-block float-right\">
+                            <input class=\"d-flex float-right\" name=\"password\" id=\"password\"/><br/>
+                        </div>
+                    </div>
+                    <div class=\"row mt-2 g-2\">
+                        <div class=\"col justify-content-right\">
 
-                </div></div>
+                            <input class=\"big-text\" type=\"submit\" name=\"submitform\" value=\"Submit\">
+                        </div>
+
+                    </div>
+                </div>
+                <a class=\"d-flex justify-content-center float-bottom\" href=\"dashboard.php\">Continue as Guest</a> 
             </form>
-            <a href=\"dashboard.php\">Continue as Guest</a> 
         </div>
     </div>
 </div>
