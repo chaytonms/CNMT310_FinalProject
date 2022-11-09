@@ -20,6 +20,7 @@ class TableTemplate {
         return '</thead>';
     }
 
+    // Creates Search Result tables for Student and Guest
     protected function addClassSearchColumns($addSelect){
         $columns = '<tr>';
         $columns .= '<th scope="col">Course Code</th>';
@@ -31,6 +32,19 @@ class TableTemplate {
         if($addSelect){
             $columns .= '<th scope="col">Select</th>';
         }
+        $columns .= '</tr>';
+        return $columns;
+    }
+
+    // Creates Student Class Columns for Student Dashboard
+    protected function addStudentClassColumns(){
+        $columns = '<tr>';
+        $columns .= '<th scope="col">Course Code</th>';
+        $columns .= '<th scope="col">Course Number</th>';
+        $columns .= '<th scope="col">Course Name</th>';
+        $columns .= '<th scope="col">Instructor</th>';
+        $columns .= '<th scope="col">Meeting Times</th>';
+        $columns .= '<th scope="col">Description</th>';
         $columns .= '</tr>';
         return $columns;
     }
@@ -58,6 +72,19 @@ class TableTemplate {
             $row .= '<button name="Select" value="' . $class['classId'] . '">Select</button>';
             $row .= '</form></td>';
         }
+        $row .= '</tr>';
+        return $row;
+    }
+
+    // Creates Student Class Rows for Student Dashboard
+    protected function addStudentClassRows($class){
+        $row = '<tr>';
+        $row .= '<td class="col-1">' . $class['coursecode'] . '</td>';
+        $row .= '<td class="col-1">' . $class['coursenum'] . '</td>';
+        $row .= '<td class="col-2">' . $class['coursename'] . '</td>';
+        $row .= '<td class="col-1">' . $class['courseinstr'] . '</td>';
+        $row .= '<td class="col-1">' . $class['meetingtimes'] . '</td>';
+        $row .= '<td class="col-2">' . $class['coursedesc'] . '</td>';
         $row .= '</tr>';
         return $row;
     }
