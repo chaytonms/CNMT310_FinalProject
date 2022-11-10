@@ -3,9 +3,58 @@ session_start();
 require_once("Template.php");
 require_once("ClassData.php");
 require_once("TableTemplate.php");
+require_once("WebServiceClient.php");
 
 $classData = new ClassData();
 $_SESSION['classData'] = $classData->getClassList();
+
+$url = "http://cnmt310.classconvo.com/classreg/";
+$client = new WebServiceClient($url);
+$client->setMethod("GET");
+
+$apihash = "nfreocsvox";
+$apikey = "api87";
+
+// Get Student ID
+$action = "authenticate";
+$username = "tzimmerman";
+$password = "VASVh8uf";
+
+$data = array("apikey" => $apikey,
+             "apihash" => $apihash,
+             "data" => array("username" => $username, "password" => $password),
+             "action" => $action
+             );
+
+$client->setPostFields($data);
+$json = (object) json_decode($client->send());
+$studentID = $json->data->id;
+
+
+// Get Student Enrolled Courses Courses
+$action = "getstudentcourses";
+
+$data = array("apikey" => $apikey,
+             "apihash" => $apihash,
+             "data" => array("student_id" => $studentID),
+             "action" => $action
+             );
+
+$client->setPostFields($data);
+$json = (object) json_decode($client->send());
+$enrolledClasses = $json->data;
+
+// Get All Courses
+$action = "listcourses";
+$data = array("apikey" => $apikey,
+             "apihash" => $apihash,
+             "data" => array(),
+             "action" => $action
+             );
+$client->setPostFields($data);
+$json = (object) json_decode($client->send());
+$allClasses = $json->data;
+
 
 // Print HTML
 $page = new Template("Step 2 - Select A Class");
@@ -18,13 +67,11 @@ $page->addBottomElement('<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2
 $page->finalizeBottomSection();
 
 print $page->getTopSection();
-// Logic to add cureently enrolled
-$_SESSION['currentlyEnrolled'][] = "90125";
 
 print "\t<h1>Select a Class</h1>\n";
 $table = new TableTemplate();
 print '<div class="container"><div class="row"><div class="col-3"></div><div class="col-9">';
-print $table->generateClassSearchResults($_SESSION['classData'], true, $_SESSION['currentlyEnrolled']);
+print $table->generateClassSearchResults($allClasses, true, $enrolledClasses);
 print '</div></div></div>';
 print $page->getBottomSection();
 ?>

@@ -59,17 +59,17 @@ class TableTemplate {
 
     protected function addClassSearchRows($class, $addSelectButton, $alreadyEnrolled = false){
         $row = '<tr>';
-        $row .= '<td class="col-1">' . $class['classCode'] . '</td>';
-        $row .= '<td class="col-1">' . $class['classNum'] . '</td>';
-        $row .= '<td class="col-2">' . $class['className'] . '</td>';
-        $row .= '<td class="col-2">' . $class['instructor'] . '</td>';
-        $row .= '<td class="col-2">' . $class['meetingTime'] . '</td>';
+        $row .= '<td class="col-1">' . $class->coursecode . '</td>';
+        $row .= '<td class="col-1">' . $class->coursenum . '</td>';
+        $row .= '<td class="col-2">' . $class->coursename . '</td>';
+        $row .= '<td class="col-2">' . $class->courseinstr . '</td>';
+        $row .= '<td class="col-2">' . $class->meetingtimes . '</td>';
 
         if($alreadyEnrolled && $addSelectButton){
             $row .= '<td class="col-1">Already Enrolled</td>';
         } else if($addSelectButton){
             $row .= '<td class="col-1"><form action="classconfirm.php" method="post">';
-            $row .= '<button name="Select" value="' . $class['classId'] . '">Select</button>';
+            $row .= '<button name="Select" value="' . $class->coursecode . '">Select</button>';
             $row .= '</form></td>';
         }
         $row .= '</tr>';
@@ -89,18 +89,22 @@ class TableTemplate {
         return $row;
     }
 
-    // Input Search Results from WebService, ture or false for select (not a guest view), and the $_SESSION['enrolledClasses'] for Enrolled Classes
     public function generateClassSearchResults($searchResults, $addSelectButton, $enrolledClasses){
+        $classCodes = array();
+        foreach($enrolledClasses as $class){
+            $classCodes[] = $class['coursecode'];
+        }
+
         $display = $this->openContainer();
 
-        // Add Logic to check if classID is in Enrolled ID
         foreach($searchResults as $result){
             $display .= $this->openTableHead();
             $display .= $this->addClassSearchColumns($addSelectButton);
             $display .= $this->closeTableHead();
             $display .= $this->openTableBody();
 
-            if(in_array($result['classId'], $enrolledClasses)){
+            // Checks if student is already enrolled in course - if so, then it won't display Select Btn
+            if(in_array($result->coursecode, $classCodes)){
                 $display .= $this->addClassSearchRows($result, $addSelectButton, true);
             } else {
                 $display .= $this->addClassSearchRows($result, $addSelectButton);
