@@ -3,8 +3,8 @@ session_start();
 require_once("WebServiceClient.php");
 
 if (!isset($_POST['username']) || !isset($_POST['password'])) {
-    //die(header("Location: index.php"));
-    var_dump($_POST);
+    die(header("Location: index.php"));
+    //var_dump($_POST);
 }
 
 if (!isset($_SESSION['role'])) {
@@ -46,9 +46,6 @@ if (!isset($json->result) || !isset($json->data) || !isset($json->data->user_rol
 }
 
 $_SESSION['role'] = $role;
-
-//For Debugging:
-//var_dump($json);
 
 die(header("Location: dashboard.php"));
 

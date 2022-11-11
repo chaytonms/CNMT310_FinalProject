@@ -52,6 +52,7 @@ div.white-overlay {
     width: 600px;
     height: 60vh;
     align-self: center;
+    min-width: 480px;
 }
 
 
