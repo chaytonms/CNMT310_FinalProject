@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("WebServiceClient.php");
+require_once(__DIR__.'/../WebServiceClient.php');
 
 if (!isset($_POST['username']) || !isset($_POST['password'])) {
     die(header("Location: index.php"));
@@ -45,7 +45,7 @@ if (!isset($json->result) || !isset($json->data) || !isset($json->data->user_rol
     die(header("Location: index.php"));
 }
 
-$_SESSION['role'] = $role;
+$_SESSION['user'] = $json->data;
 
 die(header("Location: dashboard.php"));
 

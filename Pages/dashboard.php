@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once("SplitPageTemplate.php");
+require_once(__DIR__.'/../SplitPageTemplate.php');
 
 if (!isset($_SESSION) || !isset($_SESSION['role'])) {
     $_SESSION['errors'] = array("Session Error");
