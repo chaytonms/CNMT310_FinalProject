@@ -1,0 +1,70 @@
+body {
+    background: rgb(245, 240, 240);
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+div.col-sm-4 {
+    border-right: 2px solid darkgray;
+    height: calc(100vh - 50px);
+    align-content: center;
+}
+
+div.container {
+    margin: 25px;
+    height: auto;
+}
+
+div.col-l {
+    padding-left: 25px;
+    align-content: center;
+    
+}
+
+input {
+    border-radius:5px;
+    border-color:darkgray;
+}
+
+input.submit {
+    border:none;
+}
+
+.error {
+    color: red;
+}
+
+div.hazy {
+    margin: 0;
+    background-color: rgb(0,0,0,0.5);
+    position: absolute;
+    top:0px;
+    right:0px;
+    bottom:0px;
+    left:0px;
+}
+
+div.white-overlay {
+    background-color: white;
+    border-radius: 25px;
+    margin: 20vh auto;
+    width: 600px;
+    height: 60vh;
+    align-self: center;
+    min-width: 480px;
+}
+
+
+.white-overlay > div {
+    padding: 3em;
+    width: 100%;
+    height: 100%;
+}
+
+.big-text {
+    margin: 0;
+    font-weight: bold;
+    font-size: large;
+}
+
