@@ -1,8 +1,7 @@
 <?php
 // home page
 session_start();
-require_once("Template.php");
-require_once("WebServiceClient.php");
+require_once(__DIR__.'/../Template.php');
 
 $template = new Template("Home");
 

@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once("Template.php");
-require_once("ClassData.php");
 require_once("TableTemplate.php");
 require_once("WebServiceClient.php");
 
