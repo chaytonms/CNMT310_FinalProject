@@ -7,7 +7,8 @@ if (!isset($_POST['username']) || !isset($_POST['password'])) {
     //var_dump($_POST);
 }
 
-if (!isset($_SESSION['role'])) {
+if (!isset($_SESSION['user'])) { // this is to ensure they go through the index php page, which sets a default here
+                                 // nonguests will overwrite this field with their class data.
     $_SESSION['errors'] = array("Please log in.");
     die(header("Location: index.php"));
 }
@@ -36,15 +37,16 @@ $data = array("apikey" => $apikey,
 
 $client->setPostFields($data);
 $json = (object) json_decode($client->send());
-$role = $json->data->user_role;
 
 // checks to ensure that it was a success
-if (!isset($json->result) || !isset($json->data) || !isset($json->data->user_role) || $json-> result != "Success") {
+if ($json-> result != "Success" || !isset($json->result) || !isset($json->data) || !isset($json->data->user_role)) {
     $_SESSION['errors'] = array("Account not found");
     die(header("Location: index.php"));
 }
 
-$_SESSION['user'] = $json->data;
+$_SESSION['user'] = json_encode($json->data);
+
+//print var_dump($_SESSION['user']);
 
 die(header("Location: dashboard.php"));
 ?>

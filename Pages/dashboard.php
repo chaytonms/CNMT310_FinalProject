@@ -2,11 +2,22 @@
 session_start();
 require_once(__DIR__.'/../SplitPageTemplate.php');
 
-if (!isset($_SESSION) || !isset($_SESSION['user'])) {
+function session_error() {
     $_SESSION['errors'] = array("Session Error");
-    die(header("Location: index.php"));
+    print var_dump($_SESSION);
+    //die(header("Location: index.php"));
 }
-$role = $_SESSION['user']->role;
+
+if (!isset($_SESSION) || !isset($_SESSION['user'])) {
+    session_error();
+}
+$user = json_decode($_SESSION['user']);
+
+if (!isset($user->user_role)) {
+    session_error();
+}
+
+$role = $user->user_role;
 
 $template = new SplitPageTemplate("Auth");
 
