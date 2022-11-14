@@ -45,6 +45,7 @@ class TableTemplate {
         $columns .= '<th scope="col">Instructor</th>';
         $columns .= '<th scope="col">Meeting Times</th>';
         $columns .= '<th scope="col">Description</th>';
+        $columns .= '<th scope="col">Select</th>';
         $columns .= '</tr>';
         return $columns;
     }
@@ -79,12 +80,13 @@ class TableTemplate {
     // Creates Student Class Rows for Student Dashboard
     protected function addStudentClassRows($class){
         $row = '<tr>';
-        $row .= '<td class="col-1">' . $class['coursecode'] . '</td>';
-        $row .= '<td class="col-1">' . $class['coursenum'] . '</td>';
-        $row .= '<td class="col-2">' . $class['coursename'] . '</td>';
-        $row .= '<td class="col-1">' . $class['courseinstr'] . '</td>';
-        $row .= '<td class="col-1">' . $class['meetingtimes'] . '</td>';
-        $row .= '<td class="col-2">' . $class['coursedesc'] . '</td>';
+        $row .= '<td class="col-1">' . $class->coursecode . '</td>';
+        $row .= '<td class="col-1">' . $class->coursenum . '</td>';
+        $row .= '<td class="col-2">' . $class->coursename . '</td>';
+        $row .= '<td class="col-1">' . $class->courseinstr . '</td>';
+        $row .= '<td class="col-1">' . $class->meetingtimes . '</td>';
+        $row .= '<td class="col-2">' . $class->coursedesc . '</td>';
+        $row .= '<td class="col-1"><input type="checkbox" id="classcode" name="code"></form></td>';
         $row .= '</tr>';
         return $row;
     }
@@ -112,6 +114,20 @@ class TableTemplate {
             $display .= $this->closeTable();
         }
         $display .= $this->closeContainer();
+        return $display;
+    }
+
+    public function generateStudentEnrolledClasses($studentClasses){
+        $display = $this->openContainer();
+        $display .= $this->openTableHead();
+        $display .= $this->addStudentClassColumns();
+        $display .= $this->closeTableHead();
+        $display .= $this->openTableBody();
+
+        foreach($studentClasses as $class){
+            $display .= $this->addStudentClassRows($class);
+        }
+        $display .= $this->closeTable();
         return $display;
     }
 }
