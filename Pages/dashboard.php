@@ -2,11 +2,11 @@
 session_start();
 require_once(__DIR__.'/../SplitPageTemplate.php');
 
-if (!isset($_SESSION) || !isset($_SESSION['role'])) {
+if (!isset($_SESSION) || !isset($_SESSION['user'])) {
     $_SESSION['errors'] = array("Session Error");
     die(header("Location: index.php"));
 }
-$role = $_SESSION['role'];
+$role = $_SESSION['user']->role;
 
 $template = new SplitPageTemplate("Auth");
 
@@ -41,6 +41,9 @@ print "<h4>Welcome!</h4><br/>
 </form>
 
 ";
-print $template->closeLeftOpenRightPane() . '<h4>TABLES</h4>' . $template->closeRightPane();
+print $template->closeLeftOpenRightPane();
+print '<h4>TABLES</h4>';
+// Insert Table Here
+print $template->closeRightPane();
 print $template->closeHTML();
 ?>

@@ -23,7 +23,6 @@ $client->setMethod("GET");
 $apihash = "fsfeguphgf"; // todo add into env
 $apikey = "api6"; // todo add into env
 $action = "authenticate";
-$zip = "54481";
 
 // todo turn into form
 $username = $_POST["username"];
@@ -48,5 +47,4 @@ if (!isset($json->result) || !isset($json->data) || !isset($json->data->user_rol
 $_SESSION['user'] = $json->data;
 
 die(header("Location: dashboard.php"));
-
 ?>
