@@ -4,11 +4,22 @@ require_once(__DIR__.'/../SplitPageTemplate.php');
 require_once(__DIR__.'/../TableTemplate.php');
 require_once(__DIR__.'/../WebServiceClient.php');
 
-if (!isset($_SESSION) || !isset($_SESSION['user'])) {
+function session_error() {
     $_SESSION['errors'] = array("Session Error");
+    //print var_dump($_SESSION);
     die(header("Location: index.php"));
 }
-$role = $_SESSION['user']->user_role;
+
+if (!isset($_SESSION) || !isset($_SESSION['user'])) {
+    session_error();
+}
+$user = json_decode($_SESSION['user']);
+
+if (!isset($user->user_role)) {
+    session_error();
+}
+
+$role = $user->user_role;
 
 $table = new TableTemplate();
 $template = new SplitPageTemplate("Auth");

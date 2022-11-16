@@ -1,12 +1,13 @@
 <?php
 // home page
 session_start();
-require_once(__DIR__.'/../Template.php');
+require_once('../Template.php');
+require_once('../User.php');
 
 $template = new Template("Home");
+$defaultUser = new User();
 
-$_SESSION['role'] = 'guest';
-
+$_SESSION['user'] = json_encode($defaultUser);
 
 print $template->beginHTML();
 
@@ -57,4 +58,5 @@ print "
 ";
 
 print $template->closeHTML();
+unset($_SESSION['errors']);
 ?>

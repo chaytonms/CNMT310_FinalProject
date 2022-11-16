@@ -28,7 +28,8 @@
          * Close with closeRightPane()
          */
         public function closeLeftOpenRightPane() {
-            return '</div><div class="col-lg">';
+            return '<a href="../index.php">Logout</a>
+            </div><div class="col-lg">';
         }
 
         /**
