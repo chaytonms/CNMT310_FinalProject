@@ -2,20 +2,24 @@
 
 class TableTemplate {
 
+    // Opening Div Element
     protected function openContainer(){
         return '<div class="container">';
     }
 
+    // Closing Div Element
     protected function closeContainer(){
         return '</div>';
     }
 
+    // Opens table and table head
     protected function openTableHead(){
         $head = '<table class="table">';
         $head .= '<thead class="thead-light">';
         return $head;
     }
 
+    // Closes table head
     protected function closeTableHead(){
         return '</thead>';
     }
@@ -50,14 +54,17 @@ class TableTemplate {
         return $columns;
     }
 
+    // Opens table body
     protected function openTableBody(){
         return '<tbody>';
     }
 
+    // Closes table body and Table
     protected function closeTable(){
         return '</tbody></table>';
     }
 
+    // Creates row to display on Class Search Results (Student / Guest)
     protected function addClassSearchRows($class, $addSelectButton, $alreadyEnrolled = false){
         $row = '<tr>';
         $row .= '<td class="col-1">' . $class->coursecode . '</td>';
@@ -91,6 +98,7 @@ class TableTemplate {
         return $row;
     }
 
+    // Function to generate class search result tables (students / guest)
     public function generateClassSearchResults($searchResults, $addSelectButton, $enrolledClasses){
         $classCodes = array();
         foreach($enrolledClasses as $class){
@@ -117,6 +125,7 @@ class TableTemplate {
         return $display;
     }
 
+    // Function to create Student Enrolled classes (student dashboard / class confirmation screen)
     public function generateStudentEnrolledClasses($studentClasses){
         $display = $this->openContainer();
         $display .= $this->openTableHead();
