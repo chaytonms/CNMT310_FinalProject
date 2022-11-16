@@ -4,8 +4,8 @@ require_once(__DIR__.'/../SplitPageTemplate.php');
 
 function session_error() {
     $_SESSION['errors'] = array("Session Error");
-    print var_dump($_SESSION);
-    //die(header("Location: index.php"));
+    //print var_dump($_SESSION);
+    die(header("Location: index.php"));
 }
 
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
