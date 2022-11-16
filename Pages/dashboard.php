@@ -29,6 +29,7 @@ print $template->beginHTML() . $template->openLeftPane();
 print "<h4>Welcome!</h4><br/>";
 
 print $VW->checkSessionErrors($_SESSION);
+print $VW->checkSessionSuccesses($_SESSION);
 
 print "<p>Detected role: $role</p>
 <form action=\"search.php\" method=\"POST\">
