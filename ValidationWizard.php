@@ -3,10 +3,10 @@
 class ValidationWizard {
 
     // returns array of items not set
-    public function AreSet (array $array) {
+    public function AreEmpty (array $array) {
         $notSet = array();
         foreach ($array as $item) {
-            if (!isset($item)) {
+            if (empty($item) || $item === "") {
                 $notSet[] = $item;
             }
         }

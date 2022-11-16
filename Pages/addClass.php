@@ -3,9 +3,11 @@
 session_start();
 require_once("../FormWizard.php");
 require_once("../ValidationWizard.php");
+require_once("../Template.php");
+
 $FW = new FormWizard();
 $VW = new ValidationWizard();
-
+$template = new Template("Add Class");
 
 // check if user is admin
 function session_error() {
@@ -39,6 +41,7 @@ if ($user->user_role != "admin") {
 //     "maxenroll": "24"  
 
 // make form
+print $template->beginHTML() . "<div class=\"m-5\">";
 print $VW->checkSessionErrors($_SESSION);
 
 print "<form action=\"submitAddClass.php\" method=\"POST\">
@@ -59,5 +62,5 @@ print "        <div class=\"row m-0\">
         </div>
     </div>
 </form>";
-
+print '</div>' . $template->closeHTML();
 ?>

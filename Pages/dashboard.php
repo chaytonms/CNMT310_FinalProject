@@ -27,7 +27,6 @@ $template = new SplitPageTemplate("Auth");
 print $template->beginHTML() . $template->openLeftPane();
 
 print "<h4>Welcome!</h4><br/>";
-
 print $VW->checkSessionErrors($_SESSION);
 print $VW->checkSessionSuccesses($_SESSION);
 
@@ -65,4 +64,5 @@ print '<h4>TABLES</h4>';
 print $template->closeRightPane();
 print $template->closeHTML();
 unset($_SESSION['errors']);
+unset($_SESSION['successes']);
 ?>

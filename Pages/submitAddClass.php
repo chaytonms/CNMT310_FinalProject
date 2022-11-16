@@ -15,7 +15,7 @@ $VW = new ValidationWizard();
 //     "meetingtimes": "MW 11:00a-12:15p", 
 //     "maxenroll": "24"  
 
-if (count($VW->AreSet(array($_SESSION, $_POST))) > 0) {
+if (!isset($_POST) || !isset($_SESSION)) {
     $_SESSION['errors'] = array("Session Error");
     die(header("Location:index.php"));
 }
@@ -31,23 +31,25 @@ $formFields = array(
     'maxenroll' => $_POST['maxenroll']
 );
 
-$unsetFields = $VW->AreSet(array_values($formFields));
-if (count($unsetFields) > 0) {
-    $_SESSION['errors'] = array_combine(array("the following required fields are not set:"), $unsetFields);
+print var_dump($_POST);
+
+if (!isset($_POST['coursename'], $_POST['coursecode'], 
+    $_POST['coursenum'], $_POST['coursecredits'], $_POST['coursedesc'],
+    $_POST['courseinstr'], $_POST['meetingtimes'], $_POST['maxenroll']) ||
+    $VW->AreEmpty(array_values($formFields))) {
+
+    $_SESSION['errors'] = array("Make sure all fields are entered");
     die(header("Location:addClass.php"));
 }
 
-$sessionReqs = array(
+
+if (!isset(
     $_SESSION['apihash'],
     $_SESSION['apikey'],
-    $_SESSION['user']
-    
-);
+    $_SESSION['user'])) {
 
-$unsetFields = $VW->AreSet($sessionReqs);
-if (count($unsetFields) > 0) {
     $_SESSION['errors'] = array("Session Error");
-    die(header("Location:index.php"));
+    die(header("Location:index.php"));        
 }
 
 // make the request to the api
@@ -65,10 +67,10 @@ $client->setPostFields($postData);
 $json = (object) json_decode($client->send());
 
 if ($json == null || !isset($json->result) || $json->result != "Success") { // might need more checks
-    $_SESSION['errors'] = array("Error with adding class", $json);
+    $_SESSION['errors'] = array("Error with adding class", json_encode($json));
     die(header("Location:addClass.php"));
 } else { // ik this not needed but since they are linked logically I like to have it
-
+    unset($_SESSION['errors']);
     $_SESSION['successes'] = array("Success adding a class!");
     die(header("Location:dashboard.php"));
 }
