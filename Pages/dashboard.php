@@ -1,6 +1,9 @@
 <?php
 session_start();
 require_once(__DIR__.'/../SplitPageTemplate.php');
+require_once(__DIR__.'/../ValidationWizard.php');
+
+$VW = new ValidationWizard();
 
 function session_error() {
     $_SESSION['errors'] = array("Session Error");
@@ -25,11 +28,7 @@ print $template->beginHTML() . $template->openLeftPane();
 
 print "<h4>Welcome!</h4><br/>";
 
-if (isset($_SESSION['errors'])) {
-    foreach ($_SESSION['errors'] as $e) {
-        print "<p class=\"error big-text\">$e</p>";
-    }
-}
+print $VW->checkSessionErrors($_SESSION);
 
 print "<p>Detected role: $role</p>
 <form action=\"search.php\" method=\"POST\">

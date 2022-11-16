@@ -37,6 +37,8 @@ if ($user->user_role != "admin") {
 //     "maxenroll": "24"  
 
 // make form
+print $VW->checkSessionErrors($_SESSION);
+
 print "<form action=\"submitAddClass.php\" method=\"POST\">
     <div class=\"container-fluid m-0 p-0\">";
 print $FW->standardInput("Course Name:", "courseName");
@@ -55,6 +57,5 @@ print "        <div class=\"row m-0\">
         </div>
     </div>
 </form>";
-
 
 ?>

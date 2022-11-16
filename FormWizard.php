@@ -2,6 +2,7 @@
 
 class FormWizard {
 
+    // creates the standard inputs HTML string
     public function standardInput($label, $inputName, $inputType="text") {
         return "<div class=\"row m-0 p-0\">
         <div class=\"col m-0 p-0\">

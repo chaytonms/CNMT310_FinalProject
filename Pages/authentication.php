@@ -45,6 +45,8 @@ if ($json-> result != "Success" || !isset($json->result) || !isset($json->data) 
 }
 
 $_SESSION['user'] = json_encode($json->data);
+$_SESSION['apihash'] = $apihash; // todo remove once env is added
+$_SESSION['apikey'] = $apikey; // todo ^
 
 //print var_dump($_SESSION['user']);
 
