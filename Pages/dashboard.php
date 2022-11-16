@@ -23,8 +23,15 @@ $template = new SplitPageTemplate("Auth");
 
 print $template->beginHTML() . $template->openLeftPane();
 
-print "<h4>Welcome!</h4><br/>
-<p>Detected role: $role</p>
+print "<h4>Welcome!</h4><br/>";
+
+if (isset($_SESSION['errors'])) {
+    foreach ($_SESSION['errors'] as $e) {
+        print "<p class=\"error big-text\">$e</p>";
+    }
+}
+
+print "<p>Detected role: $role</p>
 <form action=\"search.php\" method=\"POST\">
     <div class=\"container-fluid m-0 p-0\">
         <div class=\"row m-0 p-0\">
@@ -50,11 +57,12 @@ print "<h4>Welcome!</h4><br/>
         </div>
     </div>
 </form>
-
+<a href=\"addClass.php\">Add Class</a>
 ";
 print $template->closeLeftOpenRightPane();
 print '<h4>TABLES</h4>';
 // Insert Table Here
 print $template->closeRightPane();
 print $template->closeHTML();
+unset($_SESSION['errors']);
 ?>
