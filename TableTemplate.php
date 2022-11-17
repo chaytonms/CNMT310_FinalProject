@@ -143,7 +143,7 @@ class TableTemplate {
 
     // Function to generate class search result tables (students / guest)
     // $addSelectButton Parameter allows class to be selected (POSTS Class Id)
-    public function createStudentClassSearchTables($searchResults, $addSelectButton, $enrolledClasses){
+    public function createStudentClassSearchTables($searchResults, $addSelectButton, $enrolledClasses = array()){
         $classCodes = array();
         foreach($enrolledClasses as $class){
             $classCodes[] = $class->id;
