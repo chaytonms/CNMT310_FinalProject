@@ -50,7 +50,6 @@ print "<h4>Welcome!</h4><br/>
         </div>
     </div>
 </form>
-
 ";
 print $template->closeLeftOpenRightPane();
 print '<h4>TABLES</h4>';
