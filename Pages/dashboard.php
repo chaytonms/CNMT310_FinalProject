@@ -1,8 +1,6 @@
 <?php
 session_start();
 require_once(__DIR__.'/../SplitPageTemplate.php');
-require_once(__DIR__.'/../TableTemplate.php');
-require_once(__DIR__.'/../WebServiceClient.php');
 
 function session_error() {
     $_SESSION['errors'] = array("Session Error");
@@ -21,7 +19,6 @@ if (!isset($user->user_role)) {
 
 $role = $user->user_role;
 
-$table = new TableTemplate();
 $template = new SplitPageTemplate("Auth");
 
 print $template->beginHTML() . $template->openLeftPane();
@@ -53,31 +50,10 @@ print "<h4>Welcome!</h4><br/>
         </div>
     </div>
 </form>
-
 ";
 print $template->closeLeftOpenRightPane();
 print '<h4>TABLES</h4>';
-//var_dump($_SESSION['user']);
-$url = "http://cnmt310.classconvo.com/classreg/";
-$client = new WebServiceClient($url);
-//Default is to POST. If you need to change to a GET, here's how:
-
-
-// TESTING USING ALL CLASSES SINCE STUDENTS AREN"T ENROLLED IN ANYTHING
-$client->setMethod("GET");
-$apihash = "fsfeguphgf"; // todo add into env
-$apikey = "api6"; // todo add into env
-$action = "listcourses";
-$data = array("apikey" => $apikey,
-             "apihash" => $apihash,
-             "data" => array(),
-             "action" => $action
-             );
-$client->setPostFields($data);
-$json = (object) json_decode($client->send());
-$allClasses = $json->data;
-
-print $table->generateStudentEnrolledClasses($allClasses);
+// Insert Table Here
 print $template->closeRightPane();
 print $template->closeHTML();
 ?>

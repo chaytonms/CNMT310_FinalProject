@@ -41,7 +41,7 @@ class TableTemplate {
     }
 
     // Creates Student Class Columns for Student Dashboard
-    protected function addStudentClassColumns(){
+    protected function addStudentClassColumns($addSelect){
         $columns = '<tr>';
         $columns .= '<th scope="col">Course Code</th>';
         $columns .= '<th scope="col">Course Number</th>';
@@ -49,7 +49,9 @@ class TableTemplate {
         $columns .= '<th scope="col">Instructor</th>';
         $columns .= '<th scope="col">Meeting Times</th>';
         $columns .= '<th scope="col">Description</th>';
-        $columns .= '<th scope="col">Select</th>';
+        if($addSelect){
+            $columns .= '<th scope="col">Select</th>';
+        }
         $columns .= '</tr>';
         return $columns;
     }
@@ -77,7 +79,7 @@ class TableTemplate {
             $row .= '<td class="col-1">Already Enrolled</td>';
         } else if($addSelectButton){
             $row .= '<td class="col-1"><form action="classconfirm.php" method="post">';
-            $row .= '<button name="Select" value="' . $class->coursecode . '">Select</button>';
+            $row .= '<button name="Select" value="' . $class->id . '">Select</button>';
             $row .= '</form></td>';
         }
         $row .= '</tr>';
@@ -85,24 +87,66 @@ class TableTemplate {
     }
 
     // Creates Student Class Rows for Student Dashboard
-    protected function addStudentClassRows($class){
+    protected function addStudentClassRows($class, $addSelect){
+        $columnSize;
+
+        // Ensures all 9 Columns available are being used
+        if($addSelect){
+            $columnSize = array("1", "1", "2", "1", "1", "2", "1");
+        } else {
+            $columnSize = array("1", "1", "2", "1", "1", "3",);
+        }
+
+        $row = '<tr>';
+        $row .= '<td class="col-' . $columnSize[0] . '">' . $class->coursecode . '</td>';
+        $row .= '<td class="col-' . $columnSize[1] . '">' . $class->coursenum . '</td>';
+        $row .= '<td class="col-' . $columnSize[2] . '">' . $class->coursename . '</td>';
+        $row .= '<td class="col-' . $columnSize[3] . '">' . $class->courseinstr . '</td>';
+        $row .= '<td class="col-' . $columnSize[4] . '">' . $class->meetingtimes . '</td>';
+        $row .= '<td class="col-' . $columnSize[5] . '">' . $class->coursedesc . '</td>';
+        if($addSelect){
+        $row .= '<td class="col-' . $columnSize[6] . '"><input type="checkbox" name="code[]" value="' . $class->id . '"></td>';
+        }
+        $row .= '</tr>';
+        return $row;
+    }
+
+    protected function addAdminClassColumns(){
+        $columns = '<tr>';
+        $columns .= '<th scope="col">Course Code</th>';
+        $columns .= '<th scope="col">Course Number</th>';
+        $columns .= '<th scope="col">Course Name</th>';
+        $columns .= '<th scope="col">Instructor</th>';
+        $columns .= '<th scope="col">Meeting Times</th>';
+        $columns .= '<th scope="col">Edit</th>';
+        $columns .= '<th scope="col">Delete</th>';
+        $columns .= '</tr>';
+        return $columns;
+    }
+
+    protected function addAdminClassRows($class){
         $row = '<tr>';
         $row .= '<td class="col-1">' . $class->coursecode . '</td>';
         $row .= '<td class="col-1">' . $class->coursenum . '</td>';
-        $row .= '<td class="col-2">' . $class->coursename . '</td>';
-        $row .= '<td class="col-1">' . $class->courseinstr . '</td>';
-        $row .= '<td class="col-1">' . $class->meetingtimes . '</td>';
-        $row .= '<td class="col-2">' . $class->coursedesc . '</td>';
-        $row .= '<td class="col-1"><input type="checkbox" id="classcode" name="code"></form></td>';
+        $row .= '<td class="col-1">' . $class->coursename . '</td>';
+        $row .= '<td class="col-2">' . $class->courseinstr . '</td>';
+        $row .= '<td class="col-2">' . $class->meetingtimes . '</td>';
+        $row .= '<td class="col-1"><form action="editclass.php" method="post">';
+        $row .= '<button name="Edit" value="' . $class->id . '">Edit</button>';
+        $row .= '</form></td>';
+        $row .= '<td class="col-1"><form action="deleteclass.php" method="post">';
+        $row .= '<button name="Delete" value="' . $class->id . '">Delete</button>';
+        $row .= '</form></td>';
         $row .= '</tr>';
         return $row;
     }
 
     // Function to generate class search result tables (students / guest)
-    public function generateClassSearchResults($searchResults, $addSelectButton, $enrolledClasses){
+    // $addSelectButton Parameter allows class to be selected (POSTS Class Id)
+    public function createStudentClassSearchTables($searchResults, $addSelectButton, $enrolledClasses){
         $classCodes = array();
         foreach($enrolledClasses as $class){
-            $classCodes[] = $class['coursecode'];
+            $classCodes[] = $class->id;
         }
 
         $display = $this->openContainer();
@@ -114,7 +158,7 @@ class TableTemplate {
             $display .= $this->openTableBody();
 
             // Checks if student is already enrolled in course - if so, then it won't display Select Btn
-            if(in_array($result->coursecode, $classCodes)){
+            if(in_array($result->id, $classCodes)){
                 $display .= $this->addClassSearchRows($result, $addSelectButton, true);
             } else {
                 $display .= $this->addClassSearchRows($result, $addSelectButton);
@@ -125,18 +169,49 @@ class TableTemplate {
         return $display;
     }
 
+    protected function openFormElement($action, $method){
+        return '<form action="'. $action . '" method="' . $method . '">';
+    }
+
+    protected function closeFormElement($buttonName){
+        return '<input type="submit" value="' . $buttonName . '"></form>';
+    }
+
     // Function to create Student Enrolled classes (student dashboard / class confirmation screen)
-    public function generateStudentEnrolledClasses($studentClasses){
+    // $addSelect parameter (true / false) - will give table multiselect POST functionality (Posts Class ID)
+    public function createStudentDashboardClassTable($studentClasses, $addSelect){
         $display = $this->openContainer();
+        if($addSelect){
+            $display .= $this->openFormElement("dropclasses.php", "post");
+        }
         $display .= $this->openTableHead();
-        $display .= $this->addStudentClassColumns();
+        $display .= $this->addStudentClassColumns($addSelect);
         $display .= $this->closeTableHead();
         $display .= $this->openTableBody();
-
         foreach($studentClasses as $class){
-            $display .= $this->addStudentClassRows($class);
+            $display .= $this->addStudentClassRows($class, $addSelect);
         }
         $display .= $this->closeTable();
+
+        if($addSelect){
+            $display .= $this->closeFormElement("Drop Classes");
+        }
+        $display .= $this-> closeContainer();
+        return $display;
+    }
+
+    // Function to Create Admin Current Classes Table
+    public function createAdminDashboardClassTable($classes){
+        $display = $this->openContainer();
+        $display .= $this->openTableHead();
+        $display .= $this->addAdminClassColumns();
+        $display .= $this->closeTableHead();
+        $display .= $this->openTableBody();
+        foreach($classes as $class){
+            $display .= $this->addAdminClassRows($class);
+        }
+        $display .= $this->closeTable();
+        $display .= $this-> closeContainer();
         return $display;
     }
 }
