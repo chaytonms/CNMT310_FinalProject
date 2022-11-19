@@ -86,7 +86,6 @@ if($role === "admin"){
              );
     $client->setPostFields($data);
     $json = (object) json_decode($client->send());
-    var_dump($json->result);
     if($json->result === "Success" && isset($json->data)){
         if(sizeof($json->data) == 0){
             print '<p>You currently are not enrolled in any courses.</p>';
