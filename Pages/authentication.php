@@ -1,10 +1,10 @@
 <?php
 session_start();
 require_once(__DIR__.'/../WebServiceClient.php');
+require_once(__DIR__.'/../const.php');
 
 if (!isset($_POST['username']) || !isset($_POST['password'])) {
     die(header("Location: index.php"));
-    //var_dump($_POST);
 }
 
 if (!isset($_SESSION['user'])) { // this is to ensure they go through the index php page, which sets a default here
@@ -19,18 +19,14 @@ $client = new WebServiceClient($url);
 
 //Default is to POST. If you need to change to a GET, here's how:
 $client->setMethod("GET");
-
-
-$apihash = "fsfeguphgf"; // todo add into env
-$apikey = "api6"; // todo add into env
 $action = "authenticate";
 
 // todo turn into form
 $username = $_POST["username"];
 $password = $_POST['password'];
 
-$data = array("apikey" => $apikey,
-             "apihash" => $apihash,
+$data = array("apikey" => APIKEY,
+             "apihash" => APIHASH,
              "data" => array("username" => $username, "password" => $password),
              "action" => $action
              );
@@ -46,7 +42,7 @@ if ($json-> result != "Success" || !isset($json->result) || !isset($json->data) 
 
 $_SESSION['user'] = json_encode($json->data);
 
-//print var_dump($_SESSION['user']);
-
-die(header("Location: dashboard.php"));
+// THIS CODE IS FOR TESTING (WE WANT DATA FOR TESTING // WE CAN REMOVE THIS AND REDIRECT TO DASHBOARD WHEN WE TURN IN FINAL PROJECT)
+die(header("Location: startup.php"));
+//die(header("Location: dashboard.php"));
 ?>
