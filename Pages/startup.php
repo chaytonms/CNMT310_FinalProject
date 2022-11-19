@@ -138,16 +138,16 @@ $studentCourses = $json->data;
 // Enroll Student in Courses they are not already enrolled in
 $courseIDs = array();
 foreach($studentCourses as $course){
-    $courseIDs[] = $course->course_id;
+    $courseIDs[] = $course->id;
 }
 
 foreach($allCourses as $course){
-    if(!in_array($course->course_id, $courseIDs)){
+    if(!in_array($course->id, $courseIDs)){
         $action = "addstudent2course";
         $data = array("apikey" => APIKEY,
                 "apihash" => APIHASH,
                 "data" => array("student_id" => $user->id,
-                                "course_id" => $course->course_id),
+                                "course_id" => $course->id),
                                 "action" => $action
              );
         $client->setMethod("POST");
