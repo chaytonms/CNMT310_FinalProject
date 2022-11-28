@@ -88,7 +88,6 @@ class TableTemplate {
 
     // Creates Student Class Rows for Student Dashboard
     protected function addStudentClassRows($class, $addSelect){
-        $columnSize;
 
         // Ensures all 9 Columns available are being used
         if($addSelect){
@@ -134,7 +133,7 @@ class TableTemplate {
         $row .= '<td class="col-1"><form action="editclass.php" method="post">';
         $row .= '<button name="Edit" value="' . $class->id . '">Edit</button>';
         $row .= '</form></td>';
-        $row .= '<td class="col-1"><form action="deleteclass.php" method="post">';
+        $row .= '<td class="col-1"><form action="deleteClass.php" method="post">';
         $row .= '<button name="Delete" value="' . $class->id . '">Delete</button>';
         $row .= '</form></td>';
         $row .= '</tr>';

@@ -7,6 +7,11 @@ require_once(__DIR__.'/../const.php');
 require_once(__DIR__.'/../ValidationWizard.php');
 
 $VW = new ValidationWizard();
+$table = new TableTemplate();
+
+$url = "http://cnmt310.classconvo.com/classreg/";
+$client = new WebServiceClient($url);
+$client->setMethod("GET");
 
 function session_error() {
     $_SESSION['errors'] = array("Session Error");
@@ -58,17 +63,12 @@ print "<p>Detected role: $role</p>
         </div>
     </div>
 </form>
-<a href=\"addClass.php\">Add Class</a><br/>
-<a href=\"deleteClass.php?id=#\">Delete Class</a><br/>
 ";
-$table = new TableTemplate();
-$url = "http://cnmt310.classconvo.com/classreg/";
-$client = new WebServiceClient($url);
-$client->setMethod("GET");
+
 
 print $template->closeLeftOpenRightPane();
 if($role === "admin"){
-    print '<h4>Course List</h4>';
+    print '<h4>Course List <a href="addClass.php">Add Class</a></h4>';
     $action = "listcourses";
     $data = array("apikey" => APIKEY,
              "apihash" => APIHASH,

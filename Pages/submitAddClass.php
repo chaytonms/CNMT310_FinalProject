@@ -3,6 +3,7 @@ session_start();
 
 require_once(__DIR__.'/../WebServiceClient.php');
 require_once("../ValidationWizard.php");
+require_once(__DIR__.'/../const.php');
 $VW = new ValidationWizard();
 
 // ### data fields: ###
@@ -43,10 +44,7 @@ if (!isset($_POST['coursename'], $_POST['coursecode'],
 }
 
 
-if (!isset(
-    $_SESSION['apihash'],
-    $_SESSION['apikey'],
-    $_SESSION['user'])) {
+if (!isset($_SESSION['user'])) {
 
     $_SESSION['errors'] = array("Session Error");
     die(header("Location:index.php"));        
@@ -56,8 +54,8 @@ if (!isset(
 $url = "http://cnmt310.classconvo.com/classreg/";
 $client = new WebServiceClient($url);
 
-$postData = array("apikey" => $_SESSION['apikey'],
-             "apihash" => $_SESSION['apihash'],
+$postData = array("apikey" => APIKEY,
+             "apihash" => APIHASH,
              "data" => $formFields,
              "action" => "addcourse"
              );
