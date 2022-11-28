@@ -1,13 +1,15 @@
 <?php
 session_start();
 require_once(__DIR__.'/../SplitPageTemplate.php');
+require_once(__DIR__.'/../TableTemplate.php');
+require_once(__DIR__.'/../WebServiceClient.php');
+require_once(__DIR__.'/../const.php');
 require_once(__DIR__.'/../ValidationWizard.php');
 
 $VW = new ValidationWizard();
 
 function session_error() {
     $_SESSION['errors'] = array("Session Error");
-    //print var_dump($_SESSION);
     die(header("Location: index.php"));
 }
 
@@ -59,9 +61,47 @@ print "<p>Detected role: $role</p>
 <a href=\"addClass.php\">Add Class</a><br/>
 <a href=\"deleteClass.php?id=#\">Delete Class</a><br/>
 ";
-print $template->closeLeftOpenRightPane();
-print '<h4>TABLES</h4>';
+$table = new TableTemplate();
+$url = "http://cnmt310.classconvo.com/classreg/";
+$client = new WebServiceClient($url);
+$client->setMethod("GET");
 
+print $template->closeLeftOpenRightPane();
+if($role === "admin"){
+    print '<h4>Course List</h4>';
+    $action = "listcourses";
+    $data = array("apikey" => APIKEY,
+             "apihash" => APIHASH,
+             "data" => array(),
+             "action" => $action
+             );
+    $client->setPostFields($data);
+    $json = (object) json_decode($client->send());
+    if($json->result === "Success" && isset($json->data)){
+        if(sizeof($json->data) == 0){
+            print '<p> There are currently no classes.</p>';
+        }else{
+            print $table->createAdminDashboardClassTable($json->data);
+        }
+    }
+} else if($role === "student"){
+    print '<h4>Enrolled Coures</h4>';
+    $action = "getstudentcourses";
+    $data = array("apikey" => APIKEY,
+             "apihash" => APIHASH,
+             "data" => array("student_id" => $user->id),
+             "action" => $action
+             );
+    $client->setPostFields($data);
+    $json = (object) json_decode($client->send());
+    if($json->result === "Success" && isset($json->data)){
+        if(sizeof($json->data) == 0){
+            print '<p>You currently are not enrolled in any courses.</p>';
+        }else{
+            print $table->createStudentDashboardClassTable($json->data, true);
+        }
+    }
+}
 print $template->closeRightPane();
 print $template->closeHTML();
 unset($_SESSION['errors']);
