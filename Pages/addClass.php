@@ -46,18 +46,21 @@ print $VW->checkSessionErrors($_SESSION);
 
 print "<form action=\"submitAddClass.php\" method=\"POST\">
     <div class=\"container-fluid m-0 p-0\">";
-print $FW->standardInput("Course Name:", "coursename");
-print $FW->standardInput("Course Code:", "coursecode");
-print $FW->standardInput("Course Number:", "coursenum", inputType:"number");
-print $FW->standardInput("Course Credits:", "coursecredits", inputType:"number");
-print $FW->standardInput("Course Description:", "coursedesc");
-print $FW->standardInput("Course Instructor:", "courseinstr");
-print $FW->standardInput("Meeting Times:", "meetingtimes");
-print $FW->standardInput("Maximum Enrolls:", "maxenroll", inputType:"number");
+print $FW->standardInput("Course Name:", "coursename", classes:"m-10");
+print $FW->standardInput("Course Code:", "coursecode", classes:"m-10");
+print $FW->standardInput("Course Number:", "coursenum", inputType:"number", classes:"m-10");
+print $FW->standardInput("Course Credits:", "coursecredits", inputType:"number", classes:"m-10");
+print $FW->standardInput("Course Description:", "coursedesc", classes:"m-10");
+print $FW->standardInput("Course Instructor:", "courseinstr", classes:"m-10");
+print $FW->standardInput("Meeting Times:", "meetingtimes", classes:"m-10");
+print $FW->standardInput("Maximum Enrolls:", "maxenroll", inputType:"number", classes:"m-10");
 
 print "        <div class=\"row m-0\">
             <div class=\"col m-0 p-0\">
                 <input type=\"submit\" name=\"submitform\" value=\"Submit\"><br/>
+            </div>
+            <div class=\"col m-0 p-0\">
+                <a href=\"dashboard.php\">BACK</a>
             </div>
         </div>
     </div>

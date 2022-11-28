@@ -56,11 +56,12 @@ print "<p>Detected role: $role</p>
         </div>
     </div>
 </form>
-<a href=\"addClass.php\">Add Class</a>
+<a href=\"addClass.php\">Add Class</a><br/>
+<a href=\"deleteClass.php?id=#\">Delete Class</a><br/>
 ";
 print $template->closeLeftOpenRightPane();
 print '<h4>TABLES</h4>';
-// Insert Table Here
+
 print $template->closeRightPane();
 print $template->closeHTML();
 unset($_SESSION['errors']);
