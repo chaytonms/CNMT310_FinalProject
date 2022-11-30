@@ -131,10 +131,10 @@ class TableTemplate {
         $row .= '<td class="col-2">' . $class->courseinstr . '</td>';
         $row .= '<td class="col-2">' . $class->meetingtimes . '</td>';
         $row .= '<td class="col-1"><form action="editclass.php" method="post">';
-        $row .= '<button name="Edit" value="' . $class->couse_id . '">Edit</button>';
+        $row .= '<button name="Edit" value="' . $class->course_id . '">Edit</button>';
         $row .= '</form></td>';
         $row .= '<td class="col-1"><form action="deleteClass.php" method="post">';
-        $row .= '<button name="Delete" value="' . $class->couse_id . '">Delete</button>';
+        $row .= '<button name="Delete" value="' . $class->course_id . '">Delete</button>';
         $row .= '</form></td>';
         $row .= '</tr>';
         return $row;
@@ -145,7 +145,7 @@ class TableTemplate {
     public function createStudentClassSearchTables($searchResults, $addSelectButton, $enrolledClasses = array()){
         $classCodes = array();
         foreach($enrolledClasses as $class){
-            $classCodes[] = $class->couse_id;
+            $classCodes[] = $class->course_id;
         }
 
         $display = $this->openContainer();
