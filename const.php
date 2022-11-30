@@ -1,4 +1,4 @@
 <?php
-define("APIKEY", "api6"); // INPUT YOUR API KEY
-define("APIHASH", "fsfeguphgf") // INPUT YOUR API HASH
+define("APIKEY", ""); // INPUT YOUR API KEY
+define("APIHASH", "") // INPUT YOUR API HASH
 ?>
