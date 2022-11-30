@@ -79,7 +79,7 @@ class TableTemplate {
             $row .= '<td class="col-1">Already Enrolled</td>';
         } else if($addSelectButton){
             $row .= '<td class="col-1"><form action="classconfirm.php" method="post">';
-            $row .= '<button name="Select" value="' . $class->id . '">Select</button>';
+            $row .= '<button name="Select" value="' . $class->course_id . '">Select</button>';
             $row .= '</form></td>';
         }
         $row .= '</tr>';
@@ -104,7 +104,7 @@ class TableTemplate {
         $row .= '<td class="col-' . $columnSize[4] . '">' . $class->meetingtimes . '</td>';
         $row .= '<td class="col-' . $columnSize[5] . '">' . $class->coursedesc . '</td>';
         if($addSelect){
-        $row .= '<td class="col-' . $columnSize[6] . '"><input type="checkbox" name="code[]" value="' . $class->id . '"></td>';
+        $row .= '<td class="col-' . $columnSize[6] . '"><input type="checkbox" name="code[]" value="' . $class->course_id . '"></td>';
         }
         $row .= '</tr>';
         return $row;
@@ -131,10 +131,10 @@ class TableTemplate {
         $row .= '<td class="col-2">' . $class->courseinstr . '</td>';
         $row .= '<td class="col-2">' . $class->meetingtimes . '</td>';
         $row .= '<td class="col-1"><form action="editclass.php" method="post">';
-        $row .= '<button name="Edit" value="' . $class->id . '">Edit</button>';
+        $row .= '<button name="Edit" value="' . $class->course_id . '">Edit</button>';
         $row .= '</form></td>';
         $row .= '<td class="col-1"><form action="deleteclass.php" method="post">';
-        $row .= '<button name="Delete" value="' . $class->id . '">Delete</button>';
+        $row .= '<button name="Delete" value="' . $class->course_id . '">Delete</button>';
         $row .= '</form></td>';
         $row .= '</tr>';
         return $row;
@@ -145,7 +145,7 @@ class TableTemplate {
     public function createStudentClassSearchTables($searchResults, $addSelectButton, $enrolledClasses = array()){
         $classCodes = array();
         foreach($enrolledClasses as $class){
-            $classCodes[] = $class->id;
+            $classCodes[] = $class->course_id;
         }
 
         $display = $this->openContainer();
