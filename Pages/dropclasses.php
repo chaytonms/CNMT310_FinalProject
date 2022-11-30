@@ -31,7 +31,7 @@
         session_error();
     }
 
-    if ($user->user_role != "student") {
+    if ($user->user_role != "student" && $user->user_role != "admin") {
         $_SESSION['errors'] = array("Page Forbidden");
         die(header("Location: dashboard.php"));
     }
@@ -67,6 +67,8 @@
             $html .= "<p>" . $c->coursename . "</p><br />";
         }
     }
+
+    $_SESSION['classesToDrop'] = $_POST['code'];
 
     $closer = (count($classArray) > 1) ? ("es?</h2>") : ("?</h2>");
     print $template->beginHTML() . "<div class=\"m-5\"><h2>Are you sure you want to drop the following class" . $closer;
