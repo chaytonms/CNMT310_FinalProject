@@ -11,7 +11,6 @@
     $VW = new ValidationWizard();
     $template = new Template("Add Class");
 
-
     // check if user is admin
     function session_error() {
         $_SESSION['errors'] = array("Session Error");
@@ -63,9 +62,7 @@
     $classArray = $_POST['code'];
     $classes = $json->data;
     $html = "";
-    print (var_dump($_POST));
     foreach ($classes as $c) {
-        var_dump($c);
         if (in_array("".$c->id, $classArray)) {
             $html .= "<p>" . $c->coursename . "</p><br />";
         }
@@ -78,7 +75,9 @@
     print "<div class=\"row\">" . $html . "</div>";
     print "        <div class=\"row m-0\">
                 <div class=\"col m-0 p-0\">
-                    <input type=\"submit\" name=\"submitform\" value=\"Submit\"><br/>
+                    <form action=\"submitDropClasses.php\" method=\"post\">
+                        <input type=\"submit\" name=\"submitform\" value=\"Submit\"><br/>
+                    </form>
                 </div>
                 <div class=\"col m-0 p-0\">
                     <a href=\"dashboard.php\">BACK</a>
