@@ -22,6 +22,8 @@
 
     $course_id = $_SESSION['deleteId'];
 
+    // Call GetStudentListByCourse and foreach remove each Student from course using DeleteStudentFromCourse
+
     print(var_dump($_SESSION));
     //$course_id = $_POST['id'];
 

@@ -117,7 +117,6 @@ class TableTemplate {
         $columns .= '<th scope="col">Course Name</th>';
         $columns .= '<th scope="col">Instructor</th>';
         $columns .= '<th scope="col">Meeting Times</th>';
-        $columns .= '<th scope="col">Edit</th>';
         $columns .= '<th scope="col">Delete</th>';
         $columns .= '</tr>';
         return $columns;
@@ -127,14 +126,11 @@ class TableTemplate {
         $row = '<tr>';
         $row .= '<td class="col-1">' . $class->coursecode . '</td>';
         $row .= '<td class="col-1">' . $class->coursenum . '</td>';
-        $row .= '<td class="col-1">' . $class->coursename . '</td>';
+        $row .= '<td class="col-2">' . $class->coursename . '</td>';
         $row .= '<td class="col-2">' . $class->courseinstr . '</td>';
         $row .= '<td class="col-2">' . $class->meetingtimes . '</td>';
-        $row .= '<td class="col-1"><form action="editclass.php" method="post">';
-        $row .= '<button name="Edit" value="' . $class->course_id . '">Edit</button>';
-        $row .= '</form></td>';
-        $row .= '<td class="col-1"><form action="deleteclass.php" method="post">';
-        $row .= '<button name="Delete" value="' . $class->course_id . '">Delete</button>';
+        $row .= '<td class="col-1"><form action="deleteclass.php" method="get">';
+        $row .= '<button name="id" value="' . $class->id . '">Delete</button>';
         $row .= '</form></td>';
         $row .= '</tr>';
         return $row;
