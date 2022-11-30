@@ -133,7 +133,7 @@ class TableTemplate {
         $row .= '<td class="col-1"><form action="editclass.php" method="post">';
         $row .= '<button name="Edit" value="' . $class->course_id . '">Edit</button>';
         $row .= '</form></td>';
-        $row .= '<td class="col-1"><form action="deleteClass.php" method="post">';
+        $row .= '<td class="col-1"><form action="deleteclass.php" method="post">';
         $row .= '<button name="Delete" value="' . $class->course_id . '">Delete</button>';
         $row .= '</form></td>';
         $row .= '</tr>';
