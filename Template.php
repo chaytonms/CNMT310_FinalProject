@@ -12,7 +12,11 @@ class Template {
     protected $headElements = array("<!doctype html>", 
                                     "<head lang=\"en\">",
                                     "<link href=\"https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css\" rel=\"stylesheet\" integrity=\"sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi\" crossorigin=\"anonymous\">",
-                                    "<link href=\"global.css?" .  "\" rel=\"stylesheet\">",    
+                                    "<link href=\"global.css?" .  "\" rel=\"stylesheet\">",
+                                    "<link rel=\"stylesheet\" href=\"//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css\">",
+                                    "<script src=\"https://code.jquery.com/jquery-3.6.0.js\"></script>",
+                                    "<script src=\"https://code.jquery.com/ui/1.13.2/jquery-ui.js\"></script>",
+                                    "<script src=\"ac.js\"></script>"
                                 );
     
     // insert end of head + start of body here

@@ -32,35 +32,22 @@ print "<h4>Welcome!</h4><br/>";
 print $VW->checkSessionErrors($_SESSION);
 print $VW->checkSessionSuccesses($_SESSION);
 
-print "<p>Detected role: $role</p>
-<form action=\"search.php\" method=\"POST\">
-    <div class=\"container-fluid m-0 p-0\">
-        <div class=\"row m-0 p-0\">
-            <div class=\"col m-0 p-0\">
-                <p>Class:</p>
-            </div>
-            <div class=\"col m-0 p-0\">
-                <input class=\"float-end\" name=\"class\" for=\"class\"/>
-            </div>
-        </div>
-        <div class=\"row m-0 p-0\">
-            <div class=\"col m-0 p-0\">
-                <p>Major:</p>
-            </div>
-            <div class=\"col m-0 p-0\">
-                <input class=\"float-end\" name=\"major\" for=\"major\"/>
-            </div>
-        </div>
-        <div class=\"row m-0\">
-            <div class=\"col m-0 p-0\">
-                <input type=\"submit\" name=\"submitform\" value=\"Submit\"><br/>
-            </div>
-        </div>
-    </div>
+print "<p>Detected role: " . ucfirst($role) . "</p>";
+print "<a href=\"addClass.php\">Add Class</a><br/>";
+print "<a href=\"deleteClass.php?id=#\">Delete Class</a><br/>";
+print '<div class="container-fluid m-0 p-0">
+<div class="row m-0 p-0">
+<form action="searchresults.php" method="post">
+<div class="ui-widget">
+<label for="class"> Class Name: </label>
+<input id="class" name="term">
+<input type="hidden" id="search" name="searchterm" value="">
+<input type="submit" value="Search">
 </form>
-<a href=\"addClass.php\">Add Class</a><br/>
-<a href=\"deleteClass.php?id=#\">Delete Class</a><br/>
-";
+</div>
+</div>
+</div>';
+
 $table = new TableTemplate();
 $url = "http://cnmt310.classconvo.com/classreg/";
 $client = new WebServiceClient($url);
