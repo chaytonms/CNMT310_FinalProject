@@ -57,6 +57,6 @@
 
     unset($_SESSION['errors']);
     unset($_SESSION['classesToDrop']);
-    $_SESSION['successes'] = array("Course(s) dropped successfully.");
+    $_SESSION['successes'] = array("Course(s) dropped successfully!");
     die(header("Location:dashboard.php"));
 ?>

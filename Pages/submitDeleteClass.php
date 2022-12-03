@@ -4,72 +4,75 @@ require_once("../ValidationWizard.php");
 require_once(__DIR__.'/../const.php');
 
 session_start();
-var_dump($_SESSION['deleteId']);
-var_dump($_POST['submitform']);
 
-/*function deletionError() {
+function session_error() {
+    $_SESSION['errors'] = array("Session Error");
+    die(header("Location: index.php"));
+}
+
+function deletionError() {
     $_SESSION['errors'] = array("Error with deleting class");
     die(header("Location: dashboard.php"));
 }
 
-    $VW = new ValidationWizard();
+if (!isset($_SESSION) || !isset($_SESSION['user'])) {
+    session_error();
+}
+$user = json_decode($_SESSION['user']);
 
-    if (!isset($_POST) || !isset($_SESSION) || !isset($_POST['submitform'])) {
-        $_SESSION['errors'] = array("Session Error");
-        die(header("Location: index.php"));
-    }
+if (!isset($user->user_role)) {
+    session_error();
+}
 
-    if (!isset(
-        $_SESSION['user'],
-        $_SESSION['deleteId'],
-    )) {
-    
-        $_SESSION['errors'] = array("Session Error");
-        die(header("Location: index.php"));        
-    }
+if ($user->user_role != "admin") {
+    $_SESSION['errors'] = array("Page Forbidden");
+    die(header("Location: dashboard.php"));
+}
 
-    $course_id = $_SESSION['deleteId'];
+if(!isset($_SESSION['deleteId']) || empty($_SESSION['deleteId']) || !isset($_POST['submitform']) || empty($_POST['submitform'])){
+    $_SESSION['errors'] = array("You must confirm a course to delete before attempting to access this page.");
+    die(header("Location: dashboard.php"));
+}
 
-    // Call GetStudentListByCourse and foreach remove each Student from course using DeleteStudentFromCourse
+$VW = new ValidationWizard();
+$course_id = $_SESSION['deleteId'];
 
-    //print(var_dump($_SESSION));
-    //$course_id = $_POST['id'];
+$url = "http://cnmt310.classconvo.com/classreg/";
+$client = new WebServiceClient($url);
 
-    // make the request to the api
-    $url = "http://cnmt310.classconvo.com/classreg/";
-    $client = new WebServiceClient($url);
-
-
-    
-    // remove students from course to be deleted
-    
-    $postData = array("apikey" => APIKEY,
+// Get Students for Course that will be Deleted
+$postData = array("apikey" => APIKEY,
                  "apihash" => APIHASH,
                  "data" => array( "course_id" => $course_id ),
                  "action" => "getstudentlistbycourse"
                  );
 
-    $client->setPostFields($postData);
-    $json = (object) json_decode($client->send());
-    var_dump($json->result);
-    var_dump($json->data);
+$client->setPostFields($postData);
+$json = (object) json_decode($client->send());
 
-    if ($json == null || !isset($json->result) || $json->result != "Success") { // might need more checks
-        deletionError();
-    } 
-
-    $students = $json->data;
-    if (!isset($student) || !is_array($students)) {
-        deletionError();
+// Has Enrollment will be used to determine if I need to remove any students from the class
+$hasEnrollment = true;
+// Ask Professor About This Validation
+if($json == null || !isset($json->result) || $json->result != "Success"){
+    if((!is_array($json->data) && !isset($json->data->message)) || $json->data->message != "No students found"){
+        $_SESSION['errors'] = deletionError();
+        if ($json->result == "Error") {
+            $_SESSION['errors'][] = $json->data->message;
+        }
+        die(header("Location: dashboard.php"));
     }
-
+    $hasEnrollment = false;  
+}
+var_dump($json->data);
+// If there are students enrolled in the course - remove them
+if($hasEnrollment){
+    $students = $json->data;
     foreach ($students as $s) {
         $postData = array("apikey" => APIKEY,
-                 "apihash" => APIHASH,
-                 "data" => array( "course_id" => $course_id, "student_id"=> $s->student_id ),
-                 "action" => "delstudentfromcourse"
-                 );
-
+                          "apihash" => APIHASH,
+                          "data" => array( "course_id" => $course_id, "student_id"=> $s->student_id ),
+                          "action" => "delstudentfromcourse"
+                        );
         $client->setPostFields($postData);
         $json = (object) json_decode($client->send());
 
@@ -77,23 +80,21 @@ var_dump($_POST['submitform']);
             deletionError();
         }
     }
-
-
-    
-    $postData = array("apikey" => APIKEY,
+}
+// Delete the course
+$postData = array("apikey" => APIKEY,
                  "apihash" => APIHASH,
                  "data" => array( "course_id" => $course_id ),
                  "action" => "deletecourse"
                  );
-    
-    $client->setPostFields($postData);
-    $json = (object) json_decode($client->send());
+$client->setPostFields($postData);
+$json = (object) json_decode($client->send());
+if ($json == null || !isset($json->result) || $json->result != "Success") {
+    deletionError();
+}
 
-    if ($json == null || !isset($json->result) || $json->result != "Success") { // might need more checks
-        deletionError();
-    } else { // ik this not needed but since they are linked logically I like to have it
-        unset($_SESSION['errors']);
-        $_SESSION['successes'] = array("Success deleted a class!");
-        die(header("Location: dashboard.php"));
-    }  */     
+unset($_SESSION['deleteId']);
+unset($_SESSION['errors']);
+$_SESSION['successes'] = array("Successfully deleted the class!");
+die(header("Location: dashboard.php"));
 ?>
