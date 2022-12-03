@@ -30,7 +30,7 @@
 
     // Call GetStudentListByCourse and foreach remove each Student from course using DeleteStudentFromCourse
 
-    print(var_dump($_SESSION));
+    //print(var_dump($_SESSION));
     //$course_id = $_POST['id'];
 
     // make the request to the api
@@ -39,7 +39,7 @@
 
 
     
-    // remove students from couse to be deleted
+    // remove students from course to be deleted
     
     $postData = array("apikey" => APIKEY,
                  "apihash" => APIHASH,
@@ -49,8 +49,10 @@
 
     $client->setPostFields($postData);
     $json = (object) json_decode($client->send());
+    var_dump($json->result);
+    var_dump($json->data);
 
-    if ($json == null || !isset($json->result) || $json->result != "Success") { // might need more checks
+    /*if ($json == null || !isset($json->result) || $json->result != "Success") { // might need more checks
         deletionError();
     } 
 
@@ -91,5 +93,5 @@
         unset($_SESSION['errors']);
         $_SESSION['successes'] = array("Success deleted a class!");
         die(header("Location: dashboard.php"));
-    }       
+    }  */     
 ?>

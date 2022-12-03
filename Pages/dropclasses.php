@@ -11,7 +11,7 @@
     $VW = new ValidationWizard();
     $template = new Template("Add Class");
 
-    // check if user is admin
+    // check if user is Student
     function session_error() {
         $_SESSION['errors'] = array("Session Error");
         die(header("Location: index.php"));
@@ -33,6 +33,11 @@
 
     if ($user->user_role != "student" && $user->user_role != "admin") {
         $_SESSION['errors'] = array("Page Forbidden");
+        die(header("Location: dashboard.php"));
+    }
+
+    if($user->user_role != "student"){
+        $_SESSION['errors'] = array("Drop Classes is a Student Function");
         die(header("Location: dashboard.php"));
     }
 
