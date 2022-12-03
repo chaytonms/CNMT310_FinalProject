@@ -121,7 +121,7 @@ class TableTemplate {
         $row .= '<td class="col-md">' . $class->coursename . '</td>';
         $row .= '<td class="col-md">' . $class->courseinstr . '</td>';
         $row .= '<td class="col-md">' . $class->meetingtimes . '</td>';
-        $row .= '<td class="col-md"><form action="deleteclass.php" method="post">';
+        $row .= '<td class="col-md"><form action="deleteclass.php?id=#" method="get">';
         $row .= '<button class="btn btn-danger button" name="Delete" value="' . $class->id . '">Delete</button>';
         $row .= '</form></td>';
         $row .= '</tr>';

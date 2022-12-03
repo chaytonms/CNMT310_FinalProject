@@ -94,9 +94,10 @@
           
             <main class="ps-0 ps-md-5 flex-grow-1">
               <div class="container-fluid mt-1 mb-4">
-                <form action="adminsearch.php" method="post" class="form-horizontal">
+                <form action="searchresults.php" method="post" class="form-horizontal">
                   <div class="ui-widget input-group w-100">
                   <input type="search" id="class" name="term" class="form-control rounded form-control" placeholder="Search for Classes" aria-label="Search">
+                  <input type="hidden" id="search" name="searchterm">
                   <button type="submit" class="btn btn-danger button">Search</button>
                   </div>
                 </form>
@@ -122,6 +123,7 @@
                 <form action="searchresults.php" method="post" class="form-horizontal">
                   <div class="ui-widget input-group w-100">
                   <input type="search" id="class" name="term" class="form-control rounded form-control" placeholder="Search for Classes" aria-label="Search">
+                  <input type="hidden" id="search" name="searchterm">
                   <button type="submit" class="btn btn-danger button">Search</button>
                   </div>
                 </form>
@@ -147,6 +149,7 @@
                 <form action="searchresults.php" method="post" class="form-horizontal">
                   <div class="ui-widget input-group w-100">
                   <input type="search" id="class" name="term" class="form-control rounded form-control" placeholder="Search for Classes" aria-label="Search">
+                  <input type="hidden" id="search" name="searchterm">
                   <button type="submit" class="btn btn-danger button">Search</button>
                   </div>
                 </form>
