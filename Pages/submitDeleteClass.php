@@ -63,7 +63,7 @@ if($json == null || !isset($json->result) || $json->result != "Success"){
     }
     $hasEnrollment = false;  
 }
-var_dump($json->data);
+
 // If there are students enrolled in the course - remove them
 if($hasEnrollment){
     $students = $json->data;

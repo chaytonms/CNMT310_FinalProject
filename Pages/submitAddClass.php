@@ -32,8 +32,6 @@ $formFields = array(
     'maxenroll' => $_POST['maxenroll']
 );
 
-print var_dump($_POST);
-
 if (!isset($_POST['coursename'], $_POST['coursecode'], 
     $_POST['coursenum'], $_POST['coursecredits'], $_POST['coursedesc'],
     $_POST['courseinstr'], $_POST['meetingtimes'], $_POST['maxenroll']) ||
@@ -72,6 +70,4 @@ if ($json == null || !isset($json->result) || $json->result != "Success") { // m
     $_SESSION['successes'] = array("Success adding a class!");
     die(header("Location:dashboard.php"));
 }
-//print var_dump($json);
-
 ?>
