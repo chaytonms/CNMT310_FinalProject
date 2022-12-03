@@ -7,6 +7,11 @@ require_once(__DIR__.'/../const.php');
 require_once(__DIR__.'/../ValidationWizard.php');
 
 $VW = new ValidationWizard();
+$table = new TableTemplate();
+
+$url = "http://cnmt310.classconvo.com/classreg/";
+$client = new WebServiceClient($url);
+$client->setMethod("GET");
 
 function session_error() {
     $_SESSION['errors'] = array("Session Error");
@@ -66,7 +71,7 @@ if($role === "admin"){
     print $template->openStudentDashboard($role, $name);
     print $VW->checkSessionErrors($_SESSION);
     print $VW->checkSessionSuccesses($_SESSION);
-    print '<h4>Enrolled Coures</h4>';
+    print '<h4>Enrolled Courses</h4>';
     $action = "getstudentcourses";
     $data = array("apikey" => APIKEY,
              "apihash" => APIHASH,
@@ -108,4 +113,6 @@ if($role === "admin"){
 print $template->closeHTML();
 unset($_SESSION['errors']);
 unset($_SESSION['successes']);
+unset($_SESSION['deleteId']);
+unset($_SESSION['classesToDrop']);
 ?>

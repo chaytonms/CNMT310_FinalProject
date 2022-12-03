@@ -51,7 +51,7 @@ class ValidationWizard {
         if ($remove) {
             unset($Session['successes']);
         }
-        $output;
+        return $output;
     }
 
 }

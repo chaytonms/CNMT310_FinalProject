@@ -1,18 +1,18 @@
 <?php 
     session_start();
-
     require_once("../FormWizard.php");
     require_once("../ValidationWizard.php");
-    require_once("../Template.php");
+    require_once(__DIR__.'/../SplitPageTemplate.php');
+    require_once(__DIR__.'/../const.php');
+    require_once(__DIR__.'/../WebServiceClient.php');
 
     $FW = new FormWizard();
     $VW = new ValidationWizard();
-    $template = new Template("Add Class");
+    $template = new SplitPageTemplate("Delete Class Confirmation");
 
     // check if user is admin
     function session_error() {
         $_SESSION['errors'] = array("Session Error");
-        //print var_dump($_SESSION);
         die(header("Location: index.php"));
     }
 
@@ -30,28 +30,60 @@
         die(header("Location: dashboard.php"));
     }
 
-    if (!isset($_GET) || !isset($_GET['id'])) {
-        $_SESSION['errors'] = array("Class id not recognized");
+    if (!isset($_POST) || !isset($_POST['id'])) {
+        $_SESSION['errors'] = array("Select a class to delete.");
         die(header("Location: dashboard.php"));
     }
 
-    $course_id = $_GET['id'];
-    $_SESSION['deleteId'] = $course_id;
+    // Calling Web Service List Courses to get class information for delete class
+    $url = "http://cnmt310.classconvo.com/classreg/";
+    $client = new WebServiceClient($url);
 
-    // make form
-    print $template->beginHTML() . "<div class=\"m-5\">";
-    print "<form action=\"submitDeleteClass.php\" method=\"POST\">
-        <p>Are you sure you want to delete the class?</p>
-        <div class=\"container\"> 
-            <div class=\"row m-0\">
-                <div class=\"col m-0 p-0\">
-                    <input type=\"submit\" name=\"submitform\" value=\"Submit\"><br/>
-                </div>
-                <div class=\"col m-0 p-0\">
-                    <a href=\"dashboard.php\">BACK</a>
-                </div>
+    $postData = array("apikey" => APIKEY,
+             "apihash" => APIHASH,
+             "data" => array(),
+             "action" => "listcourses"
+             );
+    $client->setPostFields($postData);
+    $json = (object) json_decode($client->send());
+
+    if ($json == null || !isset($json->result) || $json->result != "Success") {
+        $_SESSION['errors'] = array("Error with fetching class.", json_encode($json));
+        die(header("Location: dashboard.php"));
+    } 
+
+    $classid = $_POST['id'];
+    $classes = $json->data;
+
+    // Session Variable to use on Submit Delete Class
+    $_SESSION['deleteId'] = $_POST['id'];
+
+    // Print HTML
+    print $template->beginHTML();
+    print $template->openMainNavigation($user->user_role);
+    print $template->closeMainNavigation();
+    print '<div class="container-fluid d-flex flex-column flex-md-row">
+    <main class="ps-0 ps-md-5 flex-grow-1">
+      <div class="container-fluid mt-1 mb-4">
+        <h3>Are you sure you want to delete the following course?</h3>
+        <div>
+          <form action="submitDeleteClass.php" method="post">
+            <ul class="mt-4 mb-4">';
+            foreach($classes as $c){
+                if ($c->id == $classid) {
+                    print "<li><h5>" . $c->coursecode . " " . $c->coursenum . ": " . $c->coursename . "</h5></li>";
+                    break;
+                }
+            }
+    print '</ul>
+            <div class="mt-2">
+              <button type="submit" name="submitform" class="btn btn-danger button" value="confirmed">Confirm Delete</button>
+              <a href="dashboard.php" class="btn btn-danger button">Cancel</a>
             </div>
+          </form>
         </div>
-    
-    </form>";
+      </div>
+    </main>
+  </div>';
+    print $template->closeHTML();
 ?>

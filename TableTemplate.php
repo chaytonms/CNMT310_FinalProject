@@ -79,7 +79,7 @@ class TableTemplate {
             $row .= '<td class="col-md">Already Enrolled</td>';
         } else if($addSelectButton){
             $row .= '<td class="col-md"><form action="classconfirm.php" method="post">';
-            $row .= '<button class="btn btn-danger button" name="Select" value="' . $class->id . '">Select</button>';
+            $row .= '<button class="btn btn-danger button" name="Select" value="' . $class->course_id . '">Select</button>';
             $row .= '</form></td>';
         }
         $row .= '</tr>';
@@ -96,7 +96,7 @@ class TableTemplate {
         $row .= '<td class="col-md">' . $class->meetingtimes . '</td>';
         $row .= '<td class="col-md">' . $class->coursedesc . '</td>';
         if($addSelect){
-        $row .= '<td class="col-md"><input type="checkbox" name="code[]" value="' . $class->id . '"></td>';
+        $row .= '<td class="col-md"><input type="checkbox" name="code[]" value="' . $class->course_id . '"></td>';
         }
         $row .= '</tr>';
         return $row;
@@ -121,8 +121,8 @@ class TableTemplate {
         $row .= '<td class="col-md">' . $class->coursename . '</td>';
         $row .= '<td class="col-md">' . $class->courseinstr . '</td>';
         $row .= '<td class="col-md">' . $class->meetingtimes . '</td>';
-        $row .= '<td class="col-md"><form action="deleteclass.php?id=#" method="get">';
-        $row .= '<button class="btn btn-danger button" name="Delete" value="' . $class->id . '">Delete</button>';
+        $row .= '<td class="col-md"><form action="deleteclass.php" method="post">';
+        $row .= '<button class="btn btn-danger button" name="id" value="' . $class->id . '">Delete</button>';
         $row .= '</form></td>';
         $row .= '</tr>';
         return $row;
@@ -133,7 +133,7 @@ class TableTemplate {
     public function createStudentClassSearchTables($searchResults, $addSelectButton, $enrolledClasses = array()){
         $classCodes = array();
         foreach($enrolledClasses as $class){
-            $classCodes[] = $class->id;
+            $classCodes[] = $class->course_id;
         }
         $display = $this->openContainer();
         $display .= $this->openTableHead();
@@ -158,7 +158,7 @@ class TableTemplate {
     }
 
     protected function closeFormElement($buttonName){
-        return '<input type="submit" value="' . $buttonName . '"></form>';
+        return '<button class="btn btn-danger button">' . $buttonName . '</button>';
     }
 
     // Function to create Student Enrolled classes (student dashboard / class confirmation screen)

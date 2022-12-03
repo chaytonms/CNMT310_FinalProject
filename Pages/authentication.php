@@ -21,7 +21,6 @@ $client = new WebServiceClient($url);
 $client->setMethod("GET");
 $action = "authenticate";
 
-// todo turn into form
 $username = $_POST["username"];
 $password = $_POST['password'];
 
@@ -41,8 +40,8 @@ if ($json-> result != "Success" || !isset($json->result) || !isset($json->data) 
 }
 
 $_SESSION['user'] = json_encode($json->data);
-$_SESSION['apihash'] = $apihash; // todo remove once env is added
-$_SESSION['apikey'] = $apikey; // todo ^
+$_SESSION['apihash'] = $apihash;
+$_SESSION['apikey'] = $apikey; 
 
 // THIS CODE IS FOR TESTING (WE WANT DATA FOR TESTING // WE CAN REMOVE THIS AND REDIRECT TO DASHBOARD WHEN WE TURN IN FINAL PROJECT)
 die(header("Location: startup.php"));
