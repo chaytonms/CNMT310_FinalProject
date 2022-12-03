@@ -1,0 +1,9 @@
+.square-box {
+    max-width: 400px;
+    min-height: 600px;
+    background-color: white;
+}
+
+body {
+    background-color: maroon;  
+}
