@@ -71,7 +71,7 @@ if($role === "admin"){
     print $template->openStudentDashboard($role, $name);
     print $VW->checkSessionErrors($_SESSION);
     print $VW->checkSessionSuccesses($_SESSION);
-    print '<h4>Enrolled Coures</h4>';
+    print '<h4>Enrolled Courses</h4>';
     $action = "getstudentcourses";
     $data = array("apikey" => APIKEY,
              "apihash" => APIHASH,

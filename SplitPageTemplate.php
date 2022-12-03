@@ -1,7 +1,10 @@
 <?php
     require_once('Template.php');
     class SplitPageTemplate extends Template {
-      
+      public function __construct($title) {
+        parent::__construct($title);
+    }
+
         public function openMainNavigation($role){
             $text = "";
             ($role === "guest") ? ($text = "Login") : ($text = "Logout");

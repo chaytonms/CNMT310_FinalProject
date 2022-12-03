@@ -1,15 +1,17 @@
 <?php
+require_once(__DIR__.'/../WebServiceClient.php');
+require_once("../ValidationWizard.php");
+require_once(__DIR__.'/../const.php');
 
-    function deletionError() {
-        $_SESSION['errors'] = array("Error with deleting class");
-        die(header("Location: dashboard.php"));
-    }
+session_start();
+var_dump($_SESSION['deleteId']);
+var_dump($_POST['submitform']);
 
-    session_start();
+/*function deletionError() {
+    $_SESSION['errors'] = array("Error with deleting class");
+    die(header("Location: dashboard.php"));
+}
 
-    require_once(__DIR__.'/../WebServiceClient.php');
-    require_once("../ValidationWizard.php");
-    require_once(__DIR__.'/../const.php');
     $VW = new ValidationWizard();
 
     if (!isset($_POST) || !isset($_SESSION) || !isset($_POST['submitform'])) {
@@ -52,7 +54,7 @@
     var_dump($json->result);
     var_dump($json->data);
 
-    /*if ($json == null || !isset($json->result) || $json->result != "Success") { // might need more checks
+    if ($json == null || !isset($json->result) || $json->result != "Success") { // might need more checks
         deletionError();
     } 
 

@@ -121,7 +121,7 @@ class TableTemplate {
         $row .= '<td class="col-md">' . $class->coursename . '</td>';
         $row .= '<td class="col-md">' . $class->courseinstr . '</td>';
         $row .= '<td class="col-md">' . $class->meetingtimes . '</td>';
-        $row .= '<td class="col-md"><form action="deleteclass.php" method="get">';
+        $row .= '<td class="col-md"><form action="deleteclass.php" method="post">';
         $row .= '<button class="btn btn-danger button" name="id" value="' . $class->id . '">Delete</button>';
         $row .= '</form></td>';
         $row .= '</tr>';
@@ -158,7 +158,7 @@ class TableTemplate {
     }
 
     protected function closeFormElement($buttonName){
-        return '<input type="submit" value="' . $buttonName . '"></form>';
+        return '<button class="btn btn-danger button">' . $buttonName . '</button>';
     }
 
     // Function to create Student Enrolled classes (student dashboard / class confirmation screen)
