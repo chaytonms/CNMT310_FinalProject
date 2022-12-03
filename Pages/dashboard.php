@@ -26,49 +26,31 @@ $user = json_decode($_SESSION['user']);
 if (!isset($user->user_role)) {
     session_error();
 }
-
 $role = $user->user_role;
+
+$name;
+if($user->user_role != "guest"){
+    if (!isset($user->name)) {
+        session_error();
+    }
+    $name = $user->name; 
+}
 
 $template = new SplitPageTemplate("Auth");
 
-print $template->beginHTML() . $template->openLeftPane();
+print $template->beginHTML();
+print $template->openMainNavigation($role);
+print $template->closeMainNavigation();
 
-print "<h4>Welcome!</h4><br/>";
-print $VW->checkSessionErrors($_SESSION);
-print $VW->checkSessionSuccesses($_SESSION);
-
-print "<p>Detected role: $role</p>
-<form action=\"search.php\" method=\"POST\">
-    <div class=\"container-fluid m-0 p-0\">
-        <div class=\"row m-0 p-0\">
-            <div class=\"col m-0 p-0\">
-                <p>Class:</p>
-            </div>
-            <div class=\"col m-0 p-0\">
-                <input class=\"float-end\" name=\"class\" for=\"class\"/>
-            </div>
-        </div>
-        <div class=\"row m-0 p-0\">
-            <div class=\"col m-0 p-0\">
-                <p>Major:</p>
-            </div>
-            <div class=\"col m-0 p-0\">
-                <input class=\"float-end\" name=\"major\" for=\"major\"/>
-            </div>
-        </div>
-        <div class=\"row m-0\">
-            <div class=\"col m-0 p-0\">
-                <input type=\"submit\" name=\"submitform\" value=\"Submit\"><br/>
-            </div>
-        </div>
-    </div>
-</form>
-";
-
-
-print $template->closeLeftOpenRightPane();
+$table = new TableTemplate();
+$url = "http://cnmt310.classconvo.com/classreg/";
+$client = new WebServiceClient($url);
+$client->setMethod("GET");
 if($role === "admin"){
-    print '<h4>Course List <a href="addClass.php">Add Class</a></h4>';
+    print $template->openAdminDashboard($role, $name);
+    print $VW->checkSessionErrors($_SESSION);
+    print $VW->checkSessionSuccesses($_SESSION);
+    print '<h4>Course List</h4>';
     $action = "listcourses";
     $data = array("apikey" => APIKEY,
              "apihash" => APIHASH,
@@ -84,7 +66,11 @@ if($role === "admin"){
             print $table->createAdminDashboardClassTable($json->data);
         }
     }
+    print $template->closeDashboard();
 } else if($role === "student"){
+    print $template->openStudentDashboard($role, $name);
+    print $VW->checkSessionErrors($_SESSION);
+    print $VW->checkSessionSuccesses($_SESSION);
     print '<h4>Enrolled Coures</h4>';
     $action = "getstudentcourses";
     $data = array("apikey" => APIKEY,
@@ -101,8 +87,29 @@ if($role === "admin"){
             print $table->createStudentDashboardClassTable($json->data, true);
         }
     }
+    print $template->closeDashboard();
+} else if($role === "guest"){
+    print $template->openGuestDashboard($role);
+    print $VW->checkSessionErrors($_SESSION);
+    print $VW->checkSessionSuccesses($_SESSION);
+    print '<h4>Available Courses</h4>';
+    $action = "listcourses";
+    $data = array("apikey" => APIKEY,
+             "apihash" => APIHASH,
+             "data" => array(),
+             "action" => $action
+             );
+    $client->setPostFields($data);
+    $json = (object) json_decode($client->send());
+    if($json->result === "Success" && isset($json->data)){
+        if(sizeof($json->data) == 0){
+            print '<p>There are currently no classes available.</p>';
+        }else{
+            print $table->createStudentClassSearchTables($json->data, false);
+        }
+    }
+    print $template->closeDashboard();
 }
-print $template->closeRightPane();
 print $template->closeHTML();
 unset($_SESSION['errors']);
 unset($_SESSION['successes']);

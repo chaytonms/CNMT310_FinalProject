@@ -4,7 +4,7 @@ class TableTemplate {
 
     // Opening Div Element
     protected function openContainer(){
-        return '<div class="container">';
+        return '<div class="table-responsive">';
     }
 
     // Closing Div Element
@@ -14,8 +14,8 @@ class TableTemplate {
 
     // Opens table and table head
     protected function openTableHead(){
-        $head = '<table class="table">';
-        $head .= '<thead class="thead-light">';
+        $head = '<table class="table table-striped">';
+        $head .= '<thead class="tableMaroon">';
         return $head;
     }
 
@@ -69,17 +69,17 @@ class TableTemplate {
     // Creates row to display on Class Search Results (Student / Guest)
     protected function addClassSearchRows($class, $addSelectButton, $alreadyEnrolled = false){
         $row = '<tr>';
-        $row .= '<td class="col-1">' . $class->coursecode . '</td>';
-        $row .= '<td class="col-1">' . $class->coursenum . '</td>';
-        $row .= '<td class="col-2">' . $class->coursename . '</td>';
-        $row .= '<td class="col-2">' . $class->courseinstr . '</td>';
-        $row .= '<td class="col-2">' . $class->meetingtimes . '</td>';
+        $row .= '<td class="col-md">' . $class->coursecode . '</td>';
+        $row .= '<td class="col-md">' . $class->coursenum . '</td>';
+        $row .= '<td class="col-md">' . $class->coursename . '</td>';
+        $row .= '<td class="col-md">' . $class->courseinstr . '</td>';
+        $row .= '<td class="col-md">' . $class->meetingtimes . '</td>';
 
         if($alreadyEnrolled && $addSelectButton){
-            $row .= '<td class="col-1">Already Enrolled</td>';
+            $row .= '<td class="col-md">Already Enrolled</td>';
         } else if($addSelectButton){
-            $row .= '<td class="col-1"><form action="classconfirm.php" method="post">';
-            $row .= '<button name="Select" value="' . $class->course_id . '">Select</button>';
+            $row .= '<td class="col-md"><form action="classconfirm.php" method="post">';
+            $row .= '<button class="btn btn-danger button" name="Select" value="' . $class->course_id . '">Select</button>';
             $row .= '</form></td>';
         }
         $row .= '</tr>';
@@ -88,23 +88,15 @@ class TableTemplate {
 
     // Creates Student Class Rows for Student Dashboard
     protected function addStudentClassRows($class, $addSelect){
-
-        // Ensures all 9 Columns available are being used
-        if($addSelect){
-            $columnSize = array("1", "1", "2", "1", "1", "2", "1");
-        } else {
-            $columnSize = array("1", "1", "2", "1", "1", "3",);
-        }
-
         $row = '<tr>';
-        $row .= '<td class="col-' . $columnSize[0] . '">' . $class->coursecode . '</td>';
-        $row .= '<td class="col-' . $columnSize[1] . '">' . $class->coursenum . '</td>';
-        $row .= '<td class="col-' . $columnSize[2] . '">' . $class->coursename . '</td>';
-        $row .= '<td class="col-' . $columnSize[3] . '">' . $class->courseinstr . '</td>';
-        $row .= '<td class="col-' . $columnSize[4] . '">' . $class->meetingtimes . '</td>';
-        $row .= '<td class="col-' . $columnSize[5] . '">' . $class->coursedesc . '</td>';
+        $row .= '<td class="col-md">' . $class->coursecode . '</td>';
+        $row .= '<td class="col-md">' . $class->coursenum . '</td>';
+        $row .= '<td class="col-md">' . $class->coursename . '</td>';
+        $row .= '<td class="col-md">' . $class->courseinstr . '</td>';
+        $row .= '<td class="col-md">' . $class->meetingtimes . '</td>';
+        $row .= '<td class="col-md">' . $class->coursedesc . '</td>';
         if($addSelect){
-        $row .= '<td class="col-' . $columnSize[6] . '"><input type="checkbox" name="code[]" value="' . $class->course_id . '"></td>';
+        $row .= '<td class="col-md"><input type="checkbox" name="code[]" value="' . $class->course_id . '"></td>';
         }
         $row .= '</tr>';
         return $row;
@@ -124,13 +116,13 @@ class TableTemplate {
 
     protected function addAdminClassRows($class){
         $row = '<tr>';
-        $row .= '<td class="col-1">' . $class->coursecode . '</td>';
-        $row .= '<td class="col-1">' . $class->coursenum . '</td>';
-        $row .= '<td class="col-2">' . $class->coursename . '</td>';
-        $row .= '<td class="col-2">' . $class->courseinstr . '</td>';
-        $row .= '<td class="col-2">' . $class->meetingtimes . '</td>';
-        $row .= '<td class="col-1"><form action="deleteclass.php" method="get">';
-        $row .= '<button name="id" value="' . $class->id . '">Delete</button>';
+        $row .= '<td class="col-md">' . $class->coursecode . '</td>';
+        $row .= '<td class="col-md">' . $class->coursenum . '</td>';
+        $row .= '<td class="col-md">' . $class->coursename . '</td>';
+        $row .= '<td class="col-md">' . $class->courseinstr . '</td>';
+        $row .= '<td class="col-md">' . $class->meetingtimes . '</td>';
+        $row .= '<td class="col-md"><form action="deleteclass.php" method="post">';
+        $row .= '<button class="btn btn-danger button" name="Delete" value="' . $class->id . '">Delete</button>';
         $row .= '</form></td>';
         $row .= '</tr>';
         return $row;
@@ -143,23 +135,20 @@ class TableTemplate {
         foreach($enrolledClasses as $class){
             $classCodes[] = $class->course_id;
         }
-
         $display = $this->openContainer();
-
+        $display .= $this->openTableHead();
+        $display .= $this->addClassSearchColumns($addSelectButton);
+        $display .= $this->closeTableHead();
+        $display .= $this->openTableBody();
         foreach($searchResults as $result){
-            $display .= $this->openTableHead();
-            $display .= $this->addClassSearchColumns($addSelectButton);
-            $display .= $this->closeTableHead();
-            $display .= $this->openTableBody();
-
             // Checks if student is already enrolled in course - if so, then it won't display Select Btn
             if(in_array($result->id, $classCodes)){
                 $display .= $this->addClassSearchRows($result, $addSelectButton, true);
             } else {
                 $display .= $this->addClassSearchRows($result, $addSelectButton);
             }
-            $display .= $this->closeTable();
         }
+        $display .= $this->closeTable();
         $display .= $this->closeContainer();
         return $display;
     }
@@ -175,10 +164,11 @@ class TableTemplate {
     // Function to create Student Enrolled classes (student dashboard / class confirmation screen)
     // $addSelect parameter (true / false) - will give table multiselect POST functionality (Posts Class ID)
     public function createStudentDashboardClassTable($studentClasses, $addSelect){
-        $display = $this->openContainer();
+        $display = "";
         if($addSelect){
             $display .= $this->openFormElement("dropclasses.php", "post");
         }
+        $display .= $this->openContainer();
         $display .= $this->openTableHead();
         $display .= $this->addStudentClassColumns($addSelect);
         $display .= $this->closeTableHead();
@@ -187,11 +177,10 @@ class TableTemplate {
             $display .= $this->addStudentClassRows($class, $addSelect);
         }
         $display .= $this->closeTable();
-
+        $display .= $this->closeContainer();
         if($addSelect){
             $display .= $this->closeFormElement("Drop Classes");
         }
-        $display .= $this-> closeContainer();
         return $display;
     }
 
@@ -206,7 +195,7 @@ class TableTemplate {
             $display .= $this->addAdminClassRows($class);
         }
         $display .= $this->closeTable();
-        $display .= $this-> closeContainer();
+        $display .= $this->closeContainer();
         return $display;
     }
 }
