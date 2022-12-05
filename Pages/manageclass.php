@@ -96,7 +96,7 @@ print '<div class="card w-75">
     <form action="addstudenttoclass.php" method="post">
     <button class="btn btn-danger button" name="id" value="' . $class->id . '">Add Student To Course</button>
     </form>
-    <form action="removestudentfromcourse.php" method="post">
+    <form action="removestudentfromclass.php" method="post">
     <button class="btn btn-danger button" name="id" value="' . $class->id . '">Remove Student From Course</button>
     </form>
     <form action="deleteclass.php" method="post">

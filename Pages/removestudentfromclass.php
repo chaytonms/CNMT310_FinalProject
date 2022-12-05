@@ -18,7 +18,7 @@
 	
 	print '
 	<h2>Manage Course</h2>
-	<form method="POST" action="confirmEnrollClass.php">
+	<form method="POST" action="submitUnenrollClass.php">
         ' . $FW->standardInput("Student ID Number", "student_id", inputType:"number", classes:"") . '
         <input type="hidden" name="id" value="'. $course_id .'/>
 		' . $FW->standardSubmit("dashboard.php", "Remove Student to Course") . ' />

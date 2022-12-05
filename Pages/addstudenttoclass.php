@@ -18,10 +18,10 @@
 	
 	print '
 	<h2>Manage Course</h2>
-	<form method="POST" action="confirmEnrollClass.php">
+	<form method="POST" action="submitEnrollClass.php">
         ' . $FW->standardInput("Student ID Number", "student_id", inputType:"number", classes:"") . '
         <input type="hidden" name="id" value="'. $course_id .'/>
-		' . $FW->standardSubmit("dashboard.php", "Remove Student to Course") . ' />
+		' . $FW->standardSubmit("dashboard.php", "Add Student to Course") . ' />
 	</form>';
 	
 	print $tem->closeHTML();
