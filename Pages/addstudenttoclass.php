@@ -5,11 +5,12 @@
     require_once("../Template.php");
 
     $FW = new FormWizard();
-    $template = new Template("Add Class");
+    $tem = new Template("Add Class");
 
-    if (!isset($_POST, $_POST['id'], $_SESSION['user'], $_SESSION['user']->roles)) {
+    if (!isset($_POST, $_POST['id'], $_SESSION['user'], $_SESSION['user']->user_role)) {
         $_SESSION['errors'] = array("Session Error");
-        die(header("Location: dashboard.php"));
+        print var_dump($_SESSION);
+        //die(header("Location: dashboard.php"));
     }
 
     $course_id = $_POST['id'];
@@ -21,12 +22,8 @@
 	<form method="POST" action="submitEnrollClass.php">
         ' . $FW->standardInput("Student ID Number", "student_id", inputType:"number", classes:"") . '
         <input type="hidden" name="id" value="'. $course_id .'/>
-		' . $FW->standardSubmit("dashboard.php", "Add Student to Course") . ' />
+		' . $FW->standardSubmit("dashboard.php", "Add Student to Course") .'
 	</form>';
 	
 	print $tem->closeHTML();
-?>
-
-
-
 ?>

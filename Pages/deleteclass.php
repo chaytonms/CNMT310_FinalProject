@@ -30,7 +30,7 @@
         die(header("Location: dashboard.php"));
     }
 
-    if (!isset($_POST) || !isset($_POST['course_id'])) {
+    if (!isset($_POST) || !isset($_POST['id'])) {
         $_SESSION['errors'] = array("Select a class to delete.");
         die(header("Location: dashboard.php"));
     }
@@ -52,11 +52,11 @@
         die(header("Location: dashboard.php"));
     } 
 
-    $classid = $_POST['course_id'];
+    $classid = $_POST['id'];
     $classes = $json->data;
 
     // Session Variable to use on Submit Delete Class
-    $_SESSION['deleteId'] = $_POST['course_id'];
+    $_SESSION['deleteId'] = $_POST['id'];
 
     // Print HTML
     print $template->beginHTML();

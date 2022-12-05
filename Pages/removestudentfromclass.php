@@ -7,7 +7,7 @@
     $FW = new FormWizard();
     $template = new Template("Add Class");
 
-    if (!isset($_POST, $_POST['id'], $_SESSION['user'], $_SESSION['user']->roles)) {
+    if (!isset($_POST, $_POST['id'], $_SESSION['user'], $_SESSION['user']->user_role)) {
         $_SESSION['errors'] = array("Session Error");
         die(header("Location: dashboard.php"));
     }
@@ -25,8 +25,4 @@
 	</form>';
 	
 	print $tem->closeHTML();
-?>
-
-
-
 ?>
