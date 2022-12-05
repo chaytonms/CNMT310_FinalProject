@@ -46,12 +46,6 @@
                   <li>
                     <a href="addClass.php" class="nav-link">Add Class</a>
                   </li>
-                  <li>
-                    <a href="addstudenttoclass.php" class="nav-link">Add Student To Class</a>
-                  </li>
-                  <li>
-                    <a href="removestudentfromclass.php" class="nav-link">Remove Student From Class</a>
-                  </li>
                 </ul>
               </div>
             </nav>
@@ -66,6 +60,22 @@
                   </div>
                 </form>
               </div>
+              <div class="container-fluid">';
+              return $display;
+        }
+
+        public function openManageClass($role, $name, $class){
+          $display = '<div class="container-fluid d-flex flex-column flex-md-row">
+            <nav class="navbar navbar-expand-md navbar-light d-flex flex-md-column">
+              <div class="w-100" id="navbarSupportedContent">
+                <ul class="navbar-nav w-100 d-flex flex-md-column text-center text-md-end">
+                  <li>
+                    <p class="h5">' . ucfirst($role) . ": " . $name . '</p>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+            <main class="ps-0 ps-md-5 flex-grow-1">
               <div class="container-fluid">';
               return $display;
         }
