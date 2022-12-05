@@ -55,7 +55,7 @@ $hasEnrollment = true;
 // Ask Professor About This Validation
 if($json == null || !isset($json->result) || $json->result != "Success"){
     if((!is_array($json->data) && !isset($json->data->message)) || $json->data->message != "No students found"){
-        $_SESSION['errors'] = deletionError();
+        deletionError();
         if ($json->result == "Error") {
             $_SESSION['errors'][] = $json->data->message;
         }
