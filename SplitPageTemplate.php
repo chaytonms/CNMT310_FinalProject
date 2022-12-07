@@ -64,7 +64,7 @@
               return $display;
         }
 
-        public function openManageClass($role, $name, $class){
+        public function openManageClass($role, $name){
           $display = '<div class="container-fluid d-flex flex-column flex-md-row">
             <nav class="navbar navbar-expand-md navbar-light d-flex flex-md-column">
               <div class="w-100" id="navbarSupportedContent">
@@ -76,7 +76,7 @@
               </div>
             </nav>
             <main class="ps-0 ps-md-5 flex-grow-1">
-              <div class="container-fluid">';
+              <div class="container">';
               return $display;
         }
 

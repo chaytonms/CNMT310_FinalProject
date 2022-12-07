@@ -30,38 +30,27 @@
         die(header("Location: dashboard.php"));
     }
 
-    if (!isset($_POST) || !isset($_POST['id'])) {
+    if ((!isset($_POST) || !isset($_POST['id'])) && (!isset($_SESSION['manage']) || !isset($_SESSION['manage']['id']) || !isset($_SESSION['manage']['name']))) {
         $_SESSION['errors'] = array("Select a class to delete.");
         die(header("Location: dashboard.php"));
     }
 
-    // Calling Web Service List Courses to get class information for delete class
-    $url = "http://cnmt310.classconvo.com/classreg/";
-    $client = new WebServiceClient($url);
-
-    $postData = array("apikey" => APIKEY,
-             "apihash" => APIHASH,
-             "data" => array(),
-             "action" => "listcourses"
-             );
-    $client->setPostFields($postData);
-    $json = (object) json_decode($client->send());
-
-    if ($json == null || !isset($json->result) || $json->result != "Success") {
-        $_SESSION['errors'] = array("Error with fetching class.", json_encode($json));
-        die(header("Location: dashboard.php"));
-    } 
-
-    $classid = $_POST['id'];
-    $classes = $json->data;
-
-    // Session Variable to use on Submit Delete Class
-    $_SESSION['deleteId'] = $_POST['id'];
+    $classid;
+    // At this point we know that $_SESSION['manage'] isset, but the logic is to handle the situation where
+    // a user navigates to manageclass.php and then alters the url to deleteclass.php. In this case only $_SESSION['manage'] would be set.
+    // If they click the delete button on manageclass.php, $_POST['id'] will bet set and used.
+    if((!isset($_POST['id']) || empty($_POST['id']))){
+      $classid = $_SESSION['manage']['id'];
+    } else {
+      $classid = $_POST['id'];
+    }
 
     // Print HTML
     print $template->beginHTML();
     print $template->openMainNavigation($user->user_role);
     print $template->closeMainNavigation();
+    print $VW->checkSessionErrors($_SESSION);
+    print $VW->checkSessionSuccesses($_SESSION);
     print '<div class="container-fluid d-flex flex-column flex-md-row">
     <main class="ps-0 ps-md-5 flex-grow-1">
       <div class="container-fluid mt-1 mb-4">
@@ -69,16 +58,11 @@
         <div>
           <form action="submitDeleteClass.php" method="post">
             <ul class="mt-4 mb-4">';
-            foreach($classes as $c){
-                if ($c->id == $classid) {
-                    print "<li><h5>" . $c->coursecode . " " . $c->coursenum . ": " . $c->coursename . "</h5></li>";
-                    break;
-                }
-            }
+    print "<li><h5>" . $_SESSION['manage']['name'] . "</h5></li>";
     print '</ul>
             <div class="mt-2">
-              <button type="submit" name="submitform" class="btn btn-danger button" value="confirmed">Confirm Delete</button>
-              <a href="dashboard.php" class="btn btn-danger button">Cancel</a>
+              <button type="submit" name="submitform" class="btn btn-danger button" value="' . $classid . '">Confirm Delete</button>
+              <a href="manageclass.php" class="btn btn-danger button">Cancel</a>
             </div>
           </form>
         </div>
@@ -86,4 +70,5 @@
     </main>
   </div>';
     print $template->closeHTML();
+    unset($_SESSION['errors']);
 ?>

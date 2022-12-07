@@ -113,6 +113,6 @@ if($role === "admin"){
 print $template->closeHTML();
 unset($_SESSION['errors']);
 unset($_SESSION['successes']);
-unset($_SESSION['deleteId']);
 unset($_SESSION['classesToDrop']);
+unset($_SESSION['manage']);
 ?>
