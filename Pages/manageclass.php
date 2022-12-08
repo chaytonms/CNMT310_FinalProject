@@ -54,11 +54,13 @@ $template = new SplitPageTemplate("Manage Course");
 $url = "http://cnmt310.classconvo.com/classreg/";
 $client = new WebServiceClient($url);
 $client->setMethod("GET");
+
 $data = array("apikey" => APIKEY,
-"apihash" => APIHASH,
-"data" => array(),
-"action" => "listcourses"
+    "apihash" => APIHASH,
+    "data" => array(),
+    "action" => "listcourses"
 );
+
 $client->setPostFields($data);
 $json = (object) json_decode($client->send());
 if($json == null || !isset($json->result) || $json->result != "Success"){
@@ -76,47 +78,31 @@ foreach($json->data as $course){
 // Set class name in session to be resued on other pages
 $_SESSION['manage']['name'] = $class->coursecode . " " . $class->coursenum . ": " . $class->coursename;
 
+// PRINT HTML
 print $template->beginHTML();
 print $template->openMainNavigation($role);
 print $template->closeMainNavigation();
-
 print $template->openManageClass($role, $name);
 print $VW->checkSessionErrors($_SESSION);
 print $VW->checkSessionSuccesses($_SESSION);
 print '<h4>Course Manager</h4>';
-print '<div class="d-flex flex-column">
-<div class="d-flex flex-column">
-  <h5 class="m-2">' . $_SESSION['manage']['name'] . '</h5>
-  <ul class="m-2">
-    <li>
-        <p class="h6">Description: ' . $class->coursedesc . '</p>
-    </li>
-    <li>
-        <p class="h6">Instructor: ' . $class->courseinstr . '</p>
-    </li>
-    <li>
-        <p class="h6">Credits: ' . $class->coursecredits . '</p>
-    </li>
-    <li>
-        <p class="h6">Meeting Times: ' . $class->meetingtimes . '</p>
-    </li>
-    <li>
-        <p class="h6">Max Enrollment: ' . $class->maxenroll . '</p>
-    </li>
-  </ul>
-  <div class="d-flex flex-column">
-    <form class="m-2" action="addstudenttoclass.php" method="post">
-    <button class="btn btn-danger button" name="id" value="' . $class->id . '">Add Student To Course</button>
-    </form>
-    <form class="m-2" action="removestudentfromclass.php" method="post">
-    <button class="btn btn-danger button" name="id" value="' . $class->id . '">Remove Student From Course</button>
-    </form>
-    <form class="m-2" action="deleteclass.php" method="post">
-    <button class="btn btn-danger button" name="id" value="' . $class->id . '">Delete</button>
-    </form>
-  </div>
-</div>
-</div>';
+print '<div class="d-flex flex-column">';
+print '<div class="d-flex flex-column">';
+print '<h5 class="m-2">' . $_SESSION['manage']['name'] . '</h5>';
+print '<ul class="m-2">';
+print '<li><p class="h6">Description: ' . $class->coursedesc . '</p></li>';
+print '<li><p class="h6">Instructor: ' . $class->courseinstr . '</p></li>';
+print '<li><p class="h6">Credits: ' . $class->coursecredits . '</p></li>';
+print '<li><p class="h6">Meeting Times: ' . $class->meetingtimes . '</p></li>';
+print '<li><p class="h6">Max Enrollment: ' . $class->maxenroll . '</p></li></ul>';
+print '<div class="d-flex flex-column">';
+print '<form class="m-2" action="addstudenttoclass.php" method="post">';
+print '<button class="btn btn-danger button" name="id" value="' . $class->id . '">Add Student To Course</button></form>';
+print '<form class="m-2" action="removestudentfromclass.php" method="post">';
+print '<button class="btn btn-danger button" name="id" value="' . $class->id . '">Remove Student From Course</button></form>';
+print '<form class="m-2" action="deleteclass.php" method="post">';
+print '<button class="btn btn-danger button" name="id" value="' . $class->id . '">Delete</button></form>';
+print '</div></div></div>';
 print $template->closeDashboard();
 print $template->closeHTML();
 unset($_SESSION['errors']);
