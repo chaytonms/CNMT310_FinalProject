@@ -1,6 +1,5 @@
 <?php
 require_once(__DIR__.'/../WebServiceClient.php');
-require_once("../ValidationWizard.php");
 require_once(__DIR__.'/../const.php');
 
 session_start();
@@ -29,13 +28,12 @@ if ($user->user_role != "admin") {
     die(header("Location: dashboard.php"));
 }
 
-if(!isset($_SESSION['deleteId']) || empty($_SESSION['deleteId']) || !isset($_POST['submitform']) || empty($_POST['submitform'])){
-    $_SESSION['errors'] = array("You must confirm a course to delete before attempting to access this page.");
-    die(header("Location: dashboard.php"));
+if(!isset($_POST['submitform']) || empty($_POST['submitform'])){
+    $_SESSION['errors'] = array("Please confirm deletion before attempting to navigate to this page.");
+    die(header("Location: deleteclass.php"));
 }
 
-$VW = new ValidationWizard();
-$course_id = $_SESSION['deleteId'];
+$course_id = $_POST['submitform'];
 
 $url = "http://cnmt310.classconvo.com/classreg/";
 $client = new WebServiceClient($url);
@@ -55,7 +53,7 @@ $hasEnrollment = true;
 // Ask Professor About This Validation
 if($json == null || !isset($json->result) || $json->result != "Success"){
     if((!is_array($json->data) && !isset($json->data->message)) || $json->data->message != "No students found"){
-        $_SESSION['errors'] = deletionError();
+        deletionError();
         if ($json->result == "Error") {
             $_SESSION['errors'][] = $json->data->message;
         }
@@ -93,8 +91,8 @@ if ($json == null || !isset($json->result) || $json->result != "Success") {
     deletionError();
 }
 
-unset($_SESSION['deleteId']);
 unset($_SESSION['errors']);
+unset($_SESSION['manage']);
 $_SESSION['successes'] = array("Successfully deleted the class!");
 die(header("Location: dashboard.php"));
 ?>

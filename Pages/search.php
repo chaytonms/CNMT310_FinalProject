@@ -3,8 +3,8 @@ require_once(__DIR__.'/../WebServiceClient.php');
 require_once(__DIR__.'/../const.php');
 
 if (!isset($_POST['term']) || empty($_POST['term'])) {
-  print json_encode(array("label" => "Post missing"));
-  exit;
+  $_SESSION['errors'] = array("Page not accessible.");
+  die(header("Location: dashboard.php"));
 }
 
 $url = "http://cnmt310.classconvo.com/classreg/";
@@ -28,3 +28,4 @@ if ($jsonResult->result == "Success" && is_array($jsonResult->data) && count($js
   }
   print json_encode($finalResult);
 }
+?>
