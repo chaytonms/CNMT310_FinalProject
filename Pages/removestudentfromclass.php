@@ -57,14 +57,13 @@ $postData = array("apikey" => APIKEY,
 $client->setPostFields($postData);
 $json = (object) json_decode($client->send());
 
-// WHAT SHOULD THE ERROR MESSAGE BE IF THE ERROR IS NOT "No Students found" ??
 if($json == null || !isset($json->result) || $json->result != "Success"){
   if(isset($json->data) && isset($json->data->message) && $json->result == "Error"){
     $_SESSION['errors'][] = $json->data->message;
     die(header("Location: manageclass.php"));
   } else {
     $_SESSION['errors'] = array("An error occurred while attempting to process your request.");
-    var_dump($json);
+    die(header("Location: manageclass.php"));
   }
 }
 

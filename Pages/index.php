@@ -4,6 +4,9 @@ session_start();
 require_once('../Template.php');
 require_once('../User.php');
 
+// Ensures an admin can't naviagte to manageclass.php, then to this page, and then back to manageclass.php
+unset($_SESSION['manage']);
+
 $template = new Template("Home");
 $defaultUser = new User();
 

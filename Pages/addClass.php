@@ -1,9 +1,11 @@
 <?php
-
 session_start();
 require_once("../FormWizard.php");
 require_once("../ValidationWizard.php");
 require_once("../Template.php");
+
+// Ensures an admin can't naviagte to manageclass.php, then to this page, and then back to manageclass.php
+unset($_SESSION['manage']);
 
 $FW = new FormWizard();
 $VW = new ValidationWizard();
