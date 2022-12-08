@@ -1,6 +1,5 @@
 <?php
 require_once(__DIR__.'/../WebServiceClient.php');
-require_once("../ValidationWizard.php");
 require_once(__DIR__.'/../const.php');
 
 session_start();
@@ -34,7 +33,6 @@ if(!isset($_POST['submitform']) || empty($_POST['submitform'])){
     die(header("Location: deleteclass.php"));
 }
 
-$VW = new ValidationWizard();
 $course_id = $_POST['submitform'];
 
 $url = "http://cnmt310.classconvo.com/classreg/";
