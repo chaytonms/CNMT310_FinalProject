@@ -86,7 +86,7 @@ class TableTemplate {
             $row .= '<td class="col-md">Already Enrolled</td>';
         } else if($addSelectButton){
             $row .= '<td class="col-md"><form action="classconfirm.php" method="post">';
-            $row .= '<button class="btn btn-danger button" name="Select" value="' . $class->id . '">Select</button>';
+            $row .= '<button class="btn btn-danger button" name="course_id" value="' . $class->id . '">Select</button>';
             $row .= '</form></td>';
         }
         $row .= '</tr>';

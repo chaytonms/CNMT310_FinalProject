@@ -117,8 +117,6 @@ $table = new TableTemplate();
 print $template->beginHTML();
 print $template->openMainNavigation($user->user_role);
 print $template->closeMainNavigation();
-print $VW->checkSessionErrors($_SESSION);
-print $VW->checkSessionSuccesses($_SESSION);
 print '<div class="container-fluid d-flex flex-column flex-md-row">';
 print '<main class="ps-0 ps-md-5 flex-grow-1">';
 print '<div class="container-fluid mt-1 mb-4">';
@@ -129,6 +127,8 @@ print '<input type="search" id="class" name="term" class="form-control rounded f
 print '<input type="hidden" id="search" name="searchterm">';
 print '<button type="submit" class="btn btn-danger button">Search</button>';
 print '</div></form>';
+print $VW->checkSessionErrors($_SESSION);
+print $VW->checkSessionSuccesses($_SESSION);
 if($term != null){
     print "<p>Showing Search Results for \"$term\""; 
 }

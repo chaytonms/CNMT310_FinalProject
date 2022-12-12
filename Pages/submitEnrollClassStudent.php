@@ -14,24 +14,25 @@ if (!isset($user->user_role)) {
     die(header("Location: index.php"));
 }
 
-if ($user->user_role != "admin") {
-    $_SESSION['errors'] = array("Page Forbidden");
+if ($user->user_role != "student") {
+    if($user->user_role == "guest"){
+        $_SESSION['errors'] = array("Page Forbidden");
+    } else {
+        $_SESSION['errors'] = array("This is a student function.");
+    }
     die(header("Location: dashboard.php"));
 }
 
-if (!isset($_SESSION['manage']) || !isset($_SESSION['manage']['name'])) {
-    $_SESSION['errors'] = array("Select a class to manage.");
-    die(header("Location: dashboard.php"));
-}
-
-if(!isset($_POST['student_id']) || empty($_POST['student_id']) || !isset($_POST['course_id']) || empty($_POST['course_id'])
+if(!isset($_POST['student_id']) || empty($_POST['student_id']) || !isset($_POST['enroll_id']) 
+|| empty($_POST['enroll_id']) || !isset($_POST['coursename']) || empty($_POST['coursename'])
 || !isset($_POST['max']) || empty($_POST['max'])){
-    $_SESSION['errors'] = array("Please confirm a student to add to the class before attempting to navigate to this page.");
-    die(header("Location: removestudentfromclass.php"));
+    $_SESSION['errors'] = array("Please confirm enrollment to the class before attempting to navigate to this page.");
+    die(header("Location: classconfirm.php"));
 }
 
 $max = $_POST['max'];
-$course_id = $_POST['course_id'];
+$coursename = $_POST['coursename'];
+$course_id = $_POST['enroll_id'];
 $student_id = $_POST['student_id'];
 $url = "http://cnmt310.classconvo.com/classreg/";
 $client = new WebServiceClient($url);
@@ -62,8 +63,8 @@ if($json->result != "Success"){
 }
 
 if($currentEnrolled + 1 > $max){
-    $_SESSION['errors'] = array("Unable to Enroll StudentID: $student_id - Course Currently Full.");
-    die(header("Location: manageclass.php"));
+    $_SESSION['errors'] = array("Unable to Enroll in $coursename - Course Currently Full.");
+    die(header("Location: dashboard.php"));
 }
 
 // Add Student To Course
@@ -80,14 +81,12 @@ $json = (object) json_decode($client->send());
 if($json == null || !isset($json->result) || $json->result != "Success"){
     if (isset($json->data) && isset($json->data->message) && $json->result == "Error") {
         $_SESSION['errors'][] = $json->data->message;
-        die(header("Location: manageclass.php"));
+        die(header("Location: classconfirm.php"));
     }
     $_SESSION['errors'] = array("There was an error processing your request.");
     die(header("Location: dashboard.php"));
 }
-$_SESSION['successes'] = array("Successfully added Student with ID: $student_id to " . $_SESSION['manage']['name']);
-
+$_SESSION['successes'] = array("You have successfully enrolled in $coursename");
 unset($_SESSION['errors']);
-unset($_SESSION['manage']);
 die(header("Location: dashboard.php"));
 ?>
