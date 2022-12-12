@@ -32,6 +32,9 @@ class TableTemplate {
         $columns .= '<th scope="col">Course Name</th>';
         $columns .= '<th scope="col">Instructor</th>';
         $columns .= '<th scope="col">Meeting Times</th>';
+        $columns .= '<th scope="col">Credits</th>';
+        $columns .= '<th scope="col">Description</th>';
+        $columns .= '<th scope="col">Max Enrollment</th>';
 
         if($addSelect){
             $columns .= '<th scope="col">Select</th>';
@@ -48,6 +51,7 @@ class TableTemplate {
         $columns .= '<th scope="col">Course Name</th>';
         $columns .= '<th scope="col">Instructor</th>';
         $columns .= '<th scope="col">Meeting Times</th>';
+        $columns .= '<th scope="col">Credits</th>';
         $columns .= '<th scope="col">Description</th>';
         if($addSelect){
             $columns .= '<th scope="col">Select</th>';
@@ -74,12 +78,15 @@ class TableTemplate {
         $row .= '<td class="col-md">' . $class->coursename . '</td>';
         $row .= '<td class="col-md">' . $class->courseinstr . '</td>';
         $row .= '<td class="col-md">' . $class->meetingtimes . '</td>';
+        $row .= '<td class="col-md">' . $class->coursecredits . '</td>';
+        $row .= '<td class="col-md">' . $class->coursedesc . '</td>';
+        $row .= '<td class="col-md">' . $class->maxenroll . '</td>';
 
         if($alreadyEnrolled && $addSelectButton){
             $row .= '<td class="col-md">Already Enrolled</td>';
         } else if($addSelectButton){
             $row .= '<td class="col-md"><form action="classconfirm.php" method="post">';
-            $row .= '<button class="btn btn-danger button" name="Select" value="' . $class->course_id . '">Select</button>';
+            $row .= '<button class="btn btn-danger button" name="Select" value="' . $class->id . '">Select</button>';
             $row .= '</form></td>';
         }
         $row .= '</tr>';
@@ -94,6 +101,7 @@ class TableTemplate {
         $row .= '<td class="col-md">' . $class->coursename . '</td>';
         $row .= '<td class="col-md">' . $class->courseinstr . '</td>';
         $row .= '<td class="col-md">' . $class->meetingtimes . '</td>';
+        $row .= '<td class="col-md">' . $class->coursecredits . '</td>';
         $row .= '<td class="col-md">' . $class->coursedesc . '</td>';
         if($addSelect){
         $row .= '<td class="col-md"><input type="checkbox" name="code[]" value="' . $class->course_id . '"></td>';
