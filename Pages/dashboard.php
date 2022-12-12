@@ -11,11 +11,6 @@ $url = "http://cnmt310.classconvo.com/classreg/";
 $client = new WebServiceClient($url);
 $client->setMethod("GET");
 
-function session_error() {
-    $_SESSION['errors'] = array("Session Error");
-    die(header("Location: index.php"));
-}
-
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
     session_error();
 }

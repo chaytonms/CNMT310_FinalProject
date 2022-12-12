@@ -1,18 +1,9 @@
 <?php
 require_once(__DIR__.'/../WebServiceClient.php');
 require_once(__DIR__.'/../const.php');
+require_once(__DIR__ . '/../ValidationWizard.php');
 
 session_start();
-
-function session_error() {
-    $_SESSION['errors'] = array("Session Error");
-    die(header("Location: index.php"));
-}
-
-function deletionError() {
-    $_SESSION['errors'] = array("Error with deleting class");
-    die(header("Location: dashboard.php"));
-}
 
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
     session_error();
@@ -24,8 +15,7 @@ if (!isset($user->user_role)) {
 }
 
 if ($user->user_role != "admin") {
-    $_SESSION['errors'] = array("Page Forbidden");
-    die(header("Location: dashboard.php"));
+    forbidden_error();
 }
 
 if(!isset($_POST['submitform']) || empty($_POST['submitform'])){
@@ -53,7 +43,7 @@ $hasEnrollment = true;
 // Ask Professor About This Validation
 if($json == null || !isset($json->result) || $json->result != "Success"){
     if((!is_array($json->data) && !isset($json->data->message)) || $json->data->message != "No students found"){
-        deletionError();
+        deletion_error();
         if ($json->result == "Error") {
             $_SESSION['errors'][] = $json->data->message;
         }
@@ -75,7 +65,7 @@ if($hasEnrollment){
         $json = (object) json_decode($client->send());
 
         if (!isset($json, $json->result) || $json->result != "Success") {
-            deletionError();
+            deletion_error();
         }
     }
 }
@@ -88,7 +78,7 @@ $postData = array("apikey" => APIKEY,
 $client->setPostFields($postData);
 $json = (object) json_decode($client->send());
 if ($json == null || !isset($json->result) || $json->result != "Success") {
-    deletionError();
+    deletion_error();
 }
 
 unset($_SESSION['errors']);

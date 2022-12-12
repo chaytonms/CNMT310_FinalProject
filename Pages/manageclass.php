@@ -10,12 +10,6 @@ $FW = new FormWizard();
 $VW = new ValidationWizard();
 $template = new SplitPageTemplate("Delete Class Confirmation");
 
-// check if user is admin
-function session_error() {
-    $_SESSION['errors'] = array("Session Error");
-    die(header("Location: index.php"));
-}
-
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
     session_error();
 }
@@ -26,8 +20,7 @@ if (!isset($user->user_role)) {
 }
 
 if ($user->user_role != "admin") {
-    $_SESSION['errors'] = array("Page Forbidden");
-    die(header("Location: dashboard.php"));
+    forbidden_error();
 }
 
 // If POST['id'] and $_SESSION['manage'] are both not set that means they have never selected Manage Course on Dashboard

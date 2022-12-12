@@ -2,21 +2,19 @@
 session_start();
 require_once(__DIR__.'/../WebServiceClient.php');
 require_once(__DIR__.'/../const.php');
+require_once("../ValidationWizard.php");
 
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
-    $_SESSION['errors'] = array("Session Error");
-    die(header("Location: index.php"));
+    session_error();
 }
 $user = json_decode($_SESSION['user']);
 
 if (!isset($user->user_role)) {
-    $_SESSION['errors'] = array("Session Error");
-    die(header("Location: index.php"));
+    session_error();
 }
 
 if ($user->user_role != "admin") {
-    $_SESSION['errors'] = array("Page Forbidden");
-    die(header("Location: dashboard.php"));
+    forbidden_error();
 }
 
 if (!isset($_SESSION['manage']) || !isset($_SESSION['manage']['name'])) {
@@ -53,7 +51,7 @@ if($json == null || !isset($json->result) || $json->result != "Success"){
     $_SESSION['errors'] = array("There was an error processing your request.");
     die(header("Location: dashboard.php"));
 }
-$_SESSION['successes'] = array("Successfully removed Student with ID: $student_id from " . $_SESSION['manage']['name']);
+$_SESSION['successes'] = array("Successfully removed Student with ID: $student_id from " . $_SESSION['manage']['name'] . '.');
 
 unset($_SESSION['errors']);
 unset($_SESSION['manage']);

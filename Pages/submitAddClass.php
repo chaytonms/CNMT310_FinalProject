@@ -17,8 +17,7 @@ $VW = new ValidationWizard();
 //     "maxenroll": "24"  
 
 if (!isset($_POST) || !isset($_SESSION)) {
-    $_SESSION['errors'] = array("Session Error");
-    die(header("Location:index.php"));
+    session_error();
 }
 
 $formFields = array(
@@ -37,15 +36,13 @@ if (!isset($_POST['coursename'], $_POST['coursecode'],
     $_POST['courseinstr'], $_POST['meetingtimes'], $_POST['maxenroll']) ||
     $VW->AreEmpty(array_values($formFields))) {
 
-    $_SESSION['errors'] = array("Make sure all fields are entered");
+    $_SESSION['errors'] = array("Make sure all fields are entered.");
     die(header("Location:addClass.php"));
 }
 
 
 if (!isset($_SESSION['user'])) {
-
-    $_SESSION['errors'] = array("Session Error");
-    die(header("Location:index.php"));        
+    session_error();      
 }
 
 // make the request to the api
@@ -63,7 +60,7 @@ $client->setPostFields($postData);
 $json = (object) json_decode($client->send());
 
 if ($json == null || !isset($json->result) || $json->result != "Success") { // might need more checks
-    $_SESSION['errors'] = array("Error with adding class", json_encode($json));
+    $_SESSION['errors'] = array("Error with adding class.");
     die(header("Location:addClass.php"));
 } else { // ik this not needed but since they are linked logically I like to have it
     unset($_SESSION['errors']);

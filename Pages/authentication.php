@@ -35,7 +35,7 @@ $json = (object) json_decode($client->send());
 
 // checks to ensure that it was a success
 if ($json-> result != "Success" || !isset($json->result) || !isset($json->data) || !isset($json->data->user_role)) {
-    $_SESSION['errors'] = array("Account not found");
+    $_SESSION['errors'] = array("Account not found.");
     die(header("Location: index.php"));
 }
 
