@@ -75,8 +75,9 @@ foreach($json->data as $course){
     }
 }
 
-// Set class name in session to be resued on other pages
+// Set class name and max enrollment in session to be resued on other pages
 $_SESSION['manage']['name'] = $class->coursecode . " " . $class->coursenum . ": " . $class->coursename;
+$_SESSION['manage']['max'] = $class->maxenroll;
 
 // PRINT HTML
 print $template->beginHTML();

@@ -27,7 +27,8 @@ if ($user->user_role != "admin") {
   die(header("Location: dashboard.php"));
 }
 
-if ((!isset($_POST) || !isset($_POST['id'])) && (!isset($_SESSION['manage']) || !isset($_SESSION['manage']['id']) || !isset($_SESSION['manage']['name']))) {
+if ((!isset($_POST) || !isset($_POST['id'])) && (!isset($_SESSION['manage']) 
+|| !isset($_SESSION['manage']['id']) || !isset($_SESSION['manage']['name']) || !isset($_SESSION['manage']['max']))) {
   $_SESSION['errors'] = array("Select a class before trying to add a student.");
   die(header("Location: dashboard.php"));
 }
@@ -57,6 +58,7 @@ print '<form action="submitEnrollClass.php" method="post">';
 print '<ul class="mt-4 mb-4">';
 print "<li><h5>" . $_SESSION['manage']['name'] . "</h5></li>";
 print '</ul><div class="mt-2">';
+print '<input type="hidden" name="max" value="' . $_SESSION['manage']['max'] . '">';
 print '<input name="student_id" type="number" min="0" max="9999999" class="form-control" placeholder="Enter Student ID" required>';
 print '<button type="submit" name="course_id" class="btn btn-danger button m-2" value="' . $classid . '">Confirm Add</button>';
 print '<a href="manageclass.php" class="btn btn-danger button m-2">Cancel</a>';

@@ -43,7 +43,5 @@ $_SESSION['user'] = json_encode($json->data);
 $_SESSION['apihash'] = $apihash;
 $_SESSION['apikey'] = $apikey; 
 
-// THIS CODE IS FOR TESTING (WE WANT DATA FOR TESTING // WE CAN REMOVE THIS AND REDIRECT TO DASHBOARD WHEN WE TURN IN FINAL PROJECT)
-die(header("Location: startup.php"));
-//die(header("Location: dashboard.php"));
+die(header("Location: dashboard.php"));
 ?>

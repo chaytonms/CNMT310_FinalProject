@@ -7,8 +7,6 @@ require_once(__DIR__.'/../const.php');
 require_once(__DIR__.'/../ValidationWizard.php');
 
 $VW = new ValidationWizard();
-$table = new TableTemplate();
-
 $url = "http://cnmt310.classconvo.com/classreg/";
 $client = new WebServiceClient($url);
 $client->setMethod("GET");
