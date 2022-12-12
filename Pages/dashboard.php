@@ -36,7 +36,7 @@ if($user->user_role != "guest"){
     $name = $user->name; 
 }
 
-$template = new SplitPageTemplate("Auth");
+$template = new SplitPageTemplate("Dashboard");
 
 print $template->beginHTML();
 print $template->openMainNavigation($role);
