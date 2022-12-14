@@ -1,10 +1,10 @@
 <?php
+session_start();
 require_once(__DIR__.'/../WebServiceClient.php');
 require_once(__DIR__.'/../const.php');
-require_once(__DIR__ . '/../ValidationWizard.php');
+require_once(__DIR__.'/../ValidationWizard.php');
 
-session_start();
-
+// Validation
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
     session_error();
 }

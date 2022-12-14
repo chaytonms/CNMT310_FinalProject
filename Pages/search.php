@@ -2,6 +2,7 @@
 require_once(__DIR__.'/../WebServiceClient.php');
 require_once(__DIR__.'/../const.php');
 
+// Validation
 if (!isset($_POST['term']) || empty($_POST['term'])) {
   $_SESSION['errors'] = array("Page not accessible.");
   die(header("Location: dashboard.php"));

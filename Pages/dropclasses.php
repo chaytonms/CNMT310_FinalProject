@@ -1,14 +1,10 @@
 <?php
 session_start();
-require_once("../FormWizard.php");
-require_once("../ValidationWizard.php");
-require_once("../Template.php");
+require_once(__DIR__.'/../SplitPageTemplate.php');
 require_once(__DIR__.'/../WebServiceClient.php');
 require_once(__DIR__.'/../const.php');
-require_once(__DIR__.'/../SplitPageTemplate.php');
-require_once(__DIR__.'/../const.php');
+require_once(__DIR__.'/../ValidationWizard.php');
 
-$FW = new FormWizard();
 $VW = new ValidationWizard();
 $template = new SplitPageTemplate("Drop Classes Confirmation");
 

@@ -1,5 +1,4 @@
 <?php
-// home page
 session_start();
 require_once('../Template.php');
 require_once('../User.php');

@@ -2,8 +2,9 @@
 session_start();
 require_once(__DIR__.'/../WebServiceClient.php');
 require_once(__DIR__.'/../const.php');
-require_once("../ValidationWizard.php");
+require_once(__DIR__.'/../ValidationWizard.php');
 
+// Validation
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
     session_error();
 }

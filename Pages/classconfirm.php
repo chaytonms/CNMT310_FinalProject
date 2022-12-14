@@ -1,10 +1,14 @@
 <?php
 session_start();
-require_once("../ValidationWizard.php");
 require_once(__DIR__.'/../SplitPageTemplate.php');
-require_once(__DIR__.'/../const.php');
 require_once(__DIR__.'/../WebServiceClient.php');
+require_once(__DIR__.'/../const.php');
+require_once(__DIR__.'/../ValidationWizard.php');
 
+$VW = new ValidationWizard();
+$template = new SplitPageTemplate("Enrollment Confirmation");
+
+// Validation
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
     session_error();
 }
@@ -63,9 +67,6 @@ if($course == null){
     $_SESSION['errors'] = array("There was an error retrieving class information. Please try again.");
     die(header("Location: searchresults.php"));
 }
-
-$VW = new ValidationWizard();
-$template = new SplitPageTemplate("Enrollment Confirmation");
 
 // PRINT HTML
 print $template->beginHTML();

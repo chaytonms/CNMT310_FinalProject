@@ -14,6 +14,7 @@ require_once(__DIR__.'/../ValidationWizard.php');
 //     "meetingtimes": "MW 11:00a-12:15p", 
 //     "maxenroll": "24"
 
+// Validation
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
   session_error();
 }
@@ -60,7 +61,6 @@ $postData = array("apikey" => APIKEY,
              "data" => $formFields,
              "action" => "addcourse"
              );
-
 
 $client->setPostFields($postData);
 $json = (object) json_decode($client->send());
