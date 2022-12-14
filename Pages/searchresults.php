@@ -7,14 +7,12 @@ require_once(__DIR__.'/../const.php');
 require_once(__DIR__.'/../ValidationWizard.php');
 
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
-    $_SESSION['errors'] = array("Session Error");
-    die(header("Location: index.php"));
+    session_error();
 }
 $user = json_decode($_SESSION['user']);
 
 if (!isset($user->user_role)) {
-    $_SESSION['errors'] = array("Session Error");
-    die(header("Location: index.php"));
+    session_error();
 }
 $role = $user->user_role;
 
@@ -62,8 +60,7 @@ $enrolledCourses;
 // Instead of a select button
 if($role == "student"){
     if (!isset($user->id)) {
-        $_SESSION['errors'] = array("Session Error");
-        die(header("Location: index.php"));
+        session_error();
     }
     $postData = array("apikey" => APIKEY,
                   "apihash" => APIHASH,

@@ -2,21 +2,20 @@
 session_start();
 require_once(__DIR__.'/../WebServiceClient.php');
 require_once(__DIR__.'/../const.php');
+require_once("../ValidationWizard.php");
 
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
-    $_SESSION['errors'] = array("Session Error");
-    die(header("Location: index.php"));
+    session_error();
 }
 $user = json_decode($_SESSION['user']);
 
 if (!isset($user->user_role)) {
-    $_SESSION['errors'] = array("Session Error");
-    die(header("Location: index.php"));
+    session_error();
 }
 
 if ($user->user_role != "student") {
     if($user->user_role == "guest"){
-        $_SESSION['errors'] = array("Page Forbidden");
+        forbidden_error();
     } else {
         $_SESSION['errors'] = array("This is a student function.");
     }

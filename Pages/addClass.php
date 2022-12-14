@@ -11,13 +11,6 @@ $FW = new FormWizard();
 $VW = new ValidationWizard();
 $template = new Template("Add Class");
 
-// check if user is admin
-function session_error() {
-    $_SESSION['errors'] = array("Session Error");
-    //print var_dump($_SESSION);
-    die(header("Location: index.php"));
-}
-
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
     session_error();
 }
@@ -28,8 +21,7 @@ if (!isset($user->user_role)) {
 }
 
 if ($user->user_role != "admin") {
-    $_SESSION['errors'] = array("Page Forbidden");
-    die(header("Location: dashboard.php"));
+    forbidden_error();
 }
 
 // ### data fields: ###

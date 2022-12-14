@@ -1,5 +1,20 @@
 <?php 
 
+function session_error() {
+    $_SESSION['errors'] = array("Session Error.");
+    die(header("Location: index.php"));
+}
+
+function deletion_error() {
+    $_SESSION['errors'] = array("Error with deleting class.");
+    die(header("Location: dashboard.php"));
+}
+
+function forbidden_error() {
+    $_SESSION['errors'] = array("Page Forbidden.");
+    die(header("Location: dashboard.php"));
+}
+
 class ValidationWizard {
 
     // returns array of items not set

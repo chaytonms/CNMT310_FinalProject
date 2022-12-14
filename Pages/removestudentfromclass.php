@@ -10,11 +10,6 @@ $FW = new FormWizard();
 $VW = new ValidationWizard();
 $template = new SplitPageTemplate("Remove Student From Class");
 
-function session_error() {
-  $_SESSION['errors'] = array("Session Error");
-  die(header("Location: index.php"));
-}
-
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
   session_error();
 }
@@ -25,8 +20,7 @@ if (!isset($user->user_role)) {
 }
 
 if ($user->user_role != "admin") {
-  $_SESSION['errors'] = array("Page Forbidden");
-  die(header("Location: dashboard.php"));
+  forbidden_error();
 }
 
 if ((!isset($_POST) || !isset($_POST['id'])) && (!isset($_SESSION['manage']) || !isset($_SESSION['manage']['id']) || !isset($_SESSION['manage']['name']))) {

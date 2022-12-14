@@ -2,11 +2,7 @@
 session_start();
 require_once(__DIR__.'/../WebServiceClient.php');
 require_once(__DIR__.'/../const.php');
-
-function session_error() {
-    $_SESSION['errors'] = array("Session Error");
-    die(header("Location: index.php"));
-}
+require_once("../ValidationWizard.php");
 
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
     session_error();
@@ -18,8 +14,7 @@ if (!isset($user->user_role)) {
 }
 
 if ($user->user_role != "student" && $user->user_role != "admin") {
-    $_SESSION['errors'] = array("Page Forbidden");
-    die(header("Location: dashboard.php"));
+    forbidden_error();
 }
 
 if($user->user_role != "student"){

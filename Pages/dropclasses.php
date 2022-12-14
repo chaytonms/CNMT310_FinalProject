@@ -11,10 +11,6 @@ require_once(__DIR__.'/../const.php');
 $FW = new FormWizard();
 $VW = new ValidationWizard();
 $template = new SplitPageTemplate("Drop Classes Confirmation");
-function session_error() {
-    $_SESSION['errors'] = array("Session Error");
-    die(header("Location: index.php"));
-}
 
 // Validation Checks user first, so we can determine the correct error message to display
 // If Guest - Page Forbidden
@@ -31,22 +27,21 @@ if (!isset($user->user_role)) {
 }
 
 if ($user->user_role != "student" && $user->user_role != "admin") {
-    $_SESSION['errors'] = array("Page Forbidden");
-    die(header("Location: dashboard.php"));
+    forbidden_error();
 }
 
 if($user->user_role != "student"){
-    $_SESSION['errors'] = array("Drop Classes is a Student Function");
+    $_SESSION['errors'] = array("Drop Classes is a Student Function.");
     die(header("Location: dashboard.php"));
 }
 
 if (!isset($_POST) || !isset($_POST['code'])) {
-    $_SESSION['errors'] = array("Select classes to drop using the checkboxes");
+    $_SESSION['errors'] = array("Select classes to drop using the checkboxes.");
     die(header("Location: dashboard.php"));
 }
 
 if (!is_array($_POST['code']) || count($_POST['code']) <= 0) {
-    $_SESSION['errors'] = array("Select classes to drop using the checkboxes");
+    $_SESSION['errors'] = array("Select classes to drop using the checkboxes.");
     die(header("Location: dashboard.php"));
 }
 
@@ -64,7 +59,7 @@ $client->setPostFields($postData);
 $json = (object) json_decode($client->send());
 
 if ($json == null || !isset($json->result) || $json->result != "Success") {
-    $_SESSION['errors'] = array("Error with fetching class.", json_encode($json));
+    $_SESSION['errors'] = array("Error with fetching class.");
     die(header("Location: dashboard.php"));
 } 
 
