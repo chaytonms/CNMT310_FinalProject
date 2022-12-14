@@ -1,4 +1,9 @@
 <?php
+/*
+Page Description: Displays search results when a user searchs anything using the search bar. If no search term is entered or a user navigates to this page directly via URL,
+it will display all the available courses in the system.
+*/
+
 session_start();
 require_once(__DIR__.'/../SplitPageTemplate.php');
 require_once(__DIR__.'/../TableTemplate.php');

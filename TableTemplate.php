@@ -1,4 +1,7 @@
 <?php
+/*
+Page Description: Class to create reusable tables for Admins, Students, and Guests
+*/
 
 class TableTemplate {
 

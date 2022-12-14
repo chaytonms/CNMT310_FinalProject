@@ -1,4 +1,7 @@
 <?php
+/*
+Page Description: Login page. Default landing page when a user first accesses the site.
+*/
 session_start();
 require_once('../Template.php');
 require_once('../User.php');

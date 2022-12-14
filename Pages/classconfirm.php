@@ -1,4 +1,8 @@
 <?php
+/*
+Page Description: GET version of Enroll into Course for Student users. Displays a confirmation page for a student to enroll into a course.
+*/
+
 session_start();
 require_once(__DIR__.'/../SplitPageTemplate.php');
 require_once(__DIR__.'/../WebServiceClient.php');

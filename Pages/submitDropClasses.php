@@ -1,4 +1,8 @@
 <?php
+/*
+Page Description: POST version of Drop Courses for Student users. Handles the webservice process of dropping the student from the selected courses (not a viewable page).
+*/
+
 session_start();
 require_once(__DIR__.'/../WebServiceClient.php');
 require_once(__DIR__.'/../const.php');

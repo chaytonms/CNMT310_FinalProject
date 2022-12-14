@@ -1,4 +1,7 @@
 <?php
+/*
+Page Description: Authenticates a user login request. If login passes authentication, it will set the user returned from the WS into into Session.
+*/
 session_start();
 require_once(__DIR__.'/../WebServiceClient.php');
 require_once(__DIR__.'/../const.php');
@@ -39,9 +42,7 @@ if ($json-> result != "Success" || !isset($json->result) || !isset($json->data) 
     die(header("Location: index.php"));
 }
 
+// Sets user returned from Webservice into $_SESSION['user']
 $_SESSION['user'] = json_encode($json->data);
-$_SESSION['apihash'] = $apihash;
-$_SESSION['apikey'] = $apikey; 
-
 die(header("Location: dashboard.php"));
 ?>

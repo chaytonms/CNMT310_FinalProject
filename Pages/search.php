@@ -1,4 +1,8 @@
 <?php
+/*
+Page Description: Handles Jquery search dropdown functionality.
+*/
+
 require_once(__DIR__.'/../WebServiceClient.php');
 require_once(__DIR__.'/../const.php');
 

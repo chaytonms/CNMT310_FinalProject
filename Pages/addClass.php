@@ -1,4 +1,8 @@
 <?php
+/*
+Page Description: GET version of Add Class for Admin users. Displays form to add a new class.
+*/
+
 session_start();
 require_once(__DIR__.'/../SplitPageTemplate.php');
 require_once(__DIR__.'/../ValidationWizard.php');

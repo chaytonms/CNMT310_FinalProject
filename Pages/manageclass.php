@@ -1,4 +1,9 @@
 <?php
+/*
+Page Description: Course Management page for Admin users. When an admin selects Manage Course on a course, it will redirect them to this page
+where they gain access to the functions: Add Student To Course, Remove Student From Course, and Delete Course for the selected course.
+*/
+
 session_start();
 require_once(__DIR__.'/../SplitPageTemplate.php');
 require_once(__DIR__.'/../WebServiceClient.php');

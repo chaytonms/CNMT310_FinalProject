@@ -1,4 +1,8 @@
 <?php
+/*
+Page Description: Default main page after a user logs in or selects continue as guest.
+*/
+
 session_start();
 require_once(__DIR__.'/../SplitPageTemplate.php');
 require_once(__DIR__.'/../TableTemplate.php');
@@ -11,6 +15,7 @@ $url = "http://cnmt310.classconvo.com/classreg/";
 $client = new WebServiceClient($url);
 $client->setMethod("GET");
 
+// Validation
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
     session_error();
 }
@@ -29,6 +34,7 @@ if($user->user_role != "guest"){
     $name = $user->name; 
 }
 
+// PRINT HTML
 $template = new SplitPageTemplate("Dashboard");
 
 print $template->beginHTML();

@@ -1,4 +1,8 @@
 <?php
+/*
+Page Description: GET version of Drop courses for student users. Displays a confirmation page for a student drop selected courses.
+*/
+
 session_start();
 require_once(__DIR__.'/../SplitPageTemplate.php');
 require_once(__DIR__.'/../WebServiceClient.php');

@@ -1,4 +1,8 @@
-<?php 
+<?php
+/*
+Page Description: GET version of Delete Class for Admin users. Displays a confirmation page for an admin to delete a course.
+*/
+
 session_start();
 require_once(__DIR__.'/../SplitPageTemplate.php');
 require_once(__DIR__.'/../WebServiceClient.php');

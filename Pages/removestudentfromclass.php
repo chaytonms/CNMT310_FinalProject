@@ -1,4 +1,8 @@
 <?php
+/*
+Page Description: GET version of Remove Student From Course for Admin users. Displays a form for admins to remove a student from a selected course.
+*/
+
 session_start();
 require_once(__DIR__.'/../SplitPageTemplate.php');
 require_once(__DIR__.'/../WebServiceClient.php');

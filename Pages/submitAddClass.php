@@ -1,4 +1,8 @@
 <?php
+/*
+Page Description: POST version of Add Course for Admin users. Handles the webservice process of adding a new course to the system (not a viewable page).
+*/
+
 session_start();
 require_once(__DIR__.'/../WebServiceClient.php');
 require_once(__DIR__.'/../const.php');

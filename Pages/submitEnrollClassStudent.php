@@ -1,4 +1,8 @@
 <?php
+/*
+Page Description: POST version of Enrolling into a course for Student users. Handles the webservice process of enrolling the student in a selected course (not a viewable page).
+*/
+
 session_start();
 require_once(__DIR__.'/../WebServiceClient.php');
 require_once(__DIR__.'/../const.php');

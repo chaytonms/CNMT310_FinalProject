@@ -1,4 +1,8 @@
 <?php
+/*
+Page Description: Class to add reusable UI components such as navigation menus and left and right pane dashboards.
+*/
+
 require_once('Template.php');
 class SplitPageTemplate extends Template {
 
