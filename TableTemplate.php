@@ -37,7 +37,7 @@ class TableTemplate {
         $columns .= '<th scope="col">Max Enrollment</th>';
 
         if($addSelect){
-            $columns .= '<th scope="col">Select</th>';
+            $columns .= '<th scope="col">Enroll</th>';
         }
         $columns .= '</tr>';
         return $columns;
@@ -86,7 +86,7 @@ class TableTemplate {
             $row .= '<td class="col-md">Already Enrolled</td>';
         } else if($addSelectButton){
             $row .= '<td class="col-md"><form action="classconfirm.php" method="post">';
-            $row .= '<button class="btn btn-danger button" name="course_id" value="' . $class->id . '">Select</button>';
+            $row .= '<button class="btn btn-danger button" name="course_id" value="' . $class->id . '">Enroll</button>';
             $row .= '</form></td>';
         }
         $row .= '</tr>';

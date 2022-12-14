@@ -42,6 +42,7 @@ print '<div class="container-fluid d-flex flex-column flex-md-row">';
 print '<main class="ps-0 ps-md-5 flex-grow-1">';
 print '<div class="container-fluid mt-1 mb-4">';
 print '<h3>Add Course</h3>';
+print '<div class="w-75 d-flex justify-content-start">';
 print '<form action="submitAddClass.php" method="POST">'; 
 
 print '<label for="coursename">Course Name:</label>';
@@ -50,14 +51,14 @@ print '<input id="coursename" name="coursename" type="text" class="form-control"
 print '<label for="coursecode">Course Code:</label>';
 print '<input id="coursecode" name="coursecode" type="text" class="form-control" placeholder="e.g. CNMT" required/>';
 
-print '<label for="coursenumber">Course Number:</label>';
-print '<input id="coursenumber" name="coursenumber" type="number" class="form-control" placeholder="e.g. 310" min="0" max="9999999" required/>';
+print '<label for="coursenum">Course Number:</label>';
+print '<input id="coursenum" name="coursenum" type="number" class="form-control" placeholder="e.g. 310" min="0" max="9999999" required/>';
 
 print '<label for="coursecredits">Course Credits:</label>';
 print '<input id="coursecredits" name="coursecredits" type="number" class="form-control" placeholder="e.g. 4" min="0" max="9999999" required/>';
 
 print '<label for="coursedesc">Course Description:</label>';
-print '<input id="coursedesc" name="coursedesc" type="text" class="form-control" placeholder="e.g. Learning things about the Internet" required/>';
+print '<textarea id="coursedesc" rows="5" cols="40" name="coursedesc" type="text" class="form-control" placeholder="e.g. Learning things about the Internet" required></textarea>';
 
 print '<label for="courseinstr">Course Instructor:</label>';
 print '<input id="courseinstr" name="courseinstr" type="text" class="form-control" placeholder="e.g. Suehring" required/>';
@@ -67,8 +68,9 @@ print '<input id="meetingtimes" name="meetingtimes" type="text" class="form-cont
 
 print '<label for="maxenroll">Max Enrollment:</label>';
 print '<input id="maxenroll" name="maxenroll" type="number" class="form-control" placeholder="e.g. 24" min="0" max="9999999" required/>';
-print '<button type="submit" name="submitform" class="btn btn-danger button">Add Course</button>';
-print '</form>';
+print '<button type="submit" name="submitform" class="btn btn-danger button m-2">Add Course</button>';
+print '<a href="dashboard.php" class="btn btn-danger button m-2">Cancel</a>';
+print '</form></div>';
 print '</div></main></div>';
 print $template->closeHTML();
 unset($_SESSION['errors']);
