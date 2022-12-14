@@ -166,7 +166,7 @@ class TableTemplate {
     }
 
     protected function closeFormElement($buttonName){
-        return '<button class="btn btn-danger button">' . $buttonName . '</button>';
+        return '<button class="btn btn-danger button">' . $buttonName . '</button></form>';
     }
 
     // Function to create Student Enrolled classes (student dashboard / class confirmation screen)

@@ -65,7 +65,7 @@ if($course == null){
 }
 
 $VW = new ValidationWizard();
-$template = new SplitPageTemplate("Delete Class Confirmation");
+$template = new SplitPageTemplate("Enrollment Confirmation");
 
 // PRINT HTML
 print $template->beginHTML();
@@ -90,7 +90,7 @@ print '<input type="hidden" name="student_id" value="' . $user->id . '">';
 print '<input type="hidden" name="max" value="' . $class->maxenroll . '">';
 print '<button type="submit" name="enroll_id" class="btn btn-danger button" value="' . $course->id . '">Confirm Enrollment</button>';
 print '<a href="searchresults.php" class="btn btn-danger button m-2">Cancel</a>';
-print '</div></form></div></div></main></div>';
+print '</form></div></div></main></div>';
 print $template->closeHTML();
 unset($_SESSION['errors']);
 ?>

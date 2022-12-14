@@ -140,7 +140,7 @@ if(count($result) > 0){
 } else {
     print '<h4>No courses matched your search.';
 }
-print '</div></div></main></div>';
+print '</div></main></div>';
 print $template->closeHTML();
 unset($_SESSION['errors']);
 unset($_SESSION['manage']);
