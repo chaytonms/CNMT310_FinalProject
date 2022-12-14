@@ -1,15 +1,10 @@
 <?php
 session_start();
-require_once("../FormWizard.php");
 require_once("../ValidationWizard.php");
-require_once("../Template.php");
+require_once("../SplitPageTemplate.php");
 
 // Ensures an admin can't naviagte to manageclass.php, then to this page, and then back to manageclass.php
 unset($_SESSION['manage']);
-
-$FW = new FormWizard();
-$VW = new ValidationWizard();
-$template = new Template("Add Class");
 
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
     session_error();
@@ -34,30 +29,47 @@ if ($user->user_role != "admin") {
 //     "meetingtimes": "MW 11:00a-12:15p", 
 //     "maxenroll": "24"  
 
-// make form
-print $template->beginHTML() . "<div class=\"m-5\">";
+$VW = new ValidationWizard(); 
+$template = new SplitPageTemplate('Add Course');
+
+// PRINT HTML
+print $template->beginHTML();
+print $template->openMainNavigation($user->user_role);
+print $template->closeMainNavigation();
 print $VW->checkSessionErrors($_SESSION);
+print $VW->checkSessionSuccesses($_SESSION);
+print '<div class="container-fluid d-flex flex-column flex-md-row">';
+print '<main class="ps-0 ps-md-5 flex-grow-1">';
+print '<div class="container-fluid mt-1 mb-4">';
+print '<h3>Add Course</h3>';
+print '<form action="submitAddClass.php" method="POST">'; 
 
-print "<form action=\"submitAddClass.php\" method=\"POST\">
-    <div class=\"container-fluid m-0 p-0\">";
-print $FW->standardInput("Course Name:", "coursename", classes:"m-10");
-print $FW->standardInput("Course Code:", "coursecode", classes:"m-10");
-print $FW->standardInput("Course Number:", "coursenum", inputType:"number", classes:"m-10");
-print $FW->standardInput("Course Credits:", "coursecredits", inputType:"number", classes:"m-10");
-print $FW->standardInput("Course Description:", "coursedesc", classes:"m-10");
-print $FW->standardInput("Course Instructor:", "courseinstr", classes:"m-10");
-print $FW->standardInput("Meeting Times:", "meetingtimes", classes:"m-10");
-print $FW->standardInput("Maximum Enrolls:", "maxenroll", inputType:"number", classes:"m-10");
+print '<label for="coursename">Course Name:</label>';
+print '<input id="coursename" name="coursename" type="text" class="form-control" placeholder="e.g. Production Programming" required/>';
 
-print "        <div class=\"row m-0\">
-            <div class=\"col m-0 p-0\">
-                <input type=\"submit\" name=\"submitform\" value=\"Submit\"><br/>
-            </div>
-            <div class=\"col m-0 p-0\">
-                <a href=\"dashboard.php\">BACK</a>
-            </div>
-        </div>
-    </div>
-</form>";
-print '</div>' . $template->closeHTML();
+print '<label for="coursecode">Course Code:</label>';
+print '<input id="coursecode" name="coursecode" type="text" class="form-control" placeholder="e.g. CNMT" required/>';
+
+print '<label for="coursenumber">Course Number:</label>';
+print '<input id="coursenumber" name="coursenumber" type="number" class="form-control" placeholder="e.g. 310" min="0" max="9999999" required/>';
+
+print '<label for="coursecredits">Course Credits:</label>';
+print '<input id="coursecredits" name="coursecredits" type="number" class="form-control" placeholder="e.g. 4" min="0" max="9999999" required/>';
+
+print '<label for="coursedesc">Course Description:</label>';
+print '<input id="coursedesc" name="coursedesc" type="text" class="form-control" placeholder="e.g. Learning things about the Internet" required/>';
+
+print '<label for="courseinstr">Course Instructor:</label>';
+print '<input id="courseinstr" name="courseinstr" type="text" class="form-control" placeholder="e.g. Suehring" required/>';
+
+print '<label for="meetingtimes">Meeting Times:</label>';
+print '<input id="meetingtimes" name="meetingtimes" type="text" class="form-control" placeholder="e.g. MW 11:00a-12:50p" required/>';
+
+print '<label for="maxenroll">Max Enrollment:</label>';
+print '<input id="maxenroll" name="maxenroll" type="number" class="form-control" placeholder="e.g. 24" min="0" max="9999999" required/>';
+print '<button type="submit" name="submitform" class="btn btn-danger button">Add Course</button>';
+print '</form>';
+print '</div></main></div>';
+print $template->closeHTML();
+unset($_SESSION['errors']);
 ?>
