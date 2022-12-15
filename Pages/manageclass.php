@@ -1,15 +1,19 @@
 <?php
-session_start();
-require_once("../FormWizard.php");
-require_once("../ValidationWizard.php");
-require_once(__DIR__.'/../SplitPageTemplate.php');
-require_once(__DIR__.'/../const.php');
-require_once(__DIR__.'/../WebServiceClient.php');
+/*
+Page Description: Course Management page for Admin users. When an admin selects Manage Course on a course, it will redirect them to this page
+where they gain access to the functions: Add Student To Course, Remove Student From Course, and Delete Course for the selected course.
+*/
 
-$FW = new FormWizard();
+session_start();
+require_once(__DIR__.'/../SplitPageTemplate.php');
+require_once(__DIR__.'/../WebServiceClient.php');
+require_once(__DIR__.'/../const.php');
+require_once(__DIR__.'/../ValidationWizard.php');
+
 $VW = new ValidationWizard();
 $template = new SplitPageTemplate("Delete Class Confirmation");
 
+// Validation
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
     session_error();
 }

@@ -1,15 +1,18 @@
 <?php
-session_start();
-require_once("../ValidationWizard.php");
-require_once("../FormWizard.php");
-require_once("../SplitPageTemplate.php");
-require_once(__DIR__.'/../const.php');
-require_once(__DIR__.'/../WebServiceClient.php');
+/*
+Page Description: GET version of Remove Student From Course for Admin users. Displays a form for admins to remove a student from a selected course.
+*/
 
-$FW = new FormWizard();
+session_start();
+require_once(__DIR__.'/../SplitPageTemplate.php');
+require_once(__DIR__.'/../WebServiceClient.php');
+require_once(__DIR__.'/../const.php');
+require_once(__DIR__.'/../ValidationWizard.php');
+
 $VW = new ValidationWizard();
 $template = new SplitPageTemplate("Remove Student From Class");
 
+// Validation
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
   session_error();
 }

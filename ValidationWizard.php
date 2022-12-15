@@ -1,4 +1,7 @@
 <?php 
+/*
+Page Description: Class to print out error or success messages. Also provides some static functions for common errors.
+*/
 
 function session_error() {
     $_SESSION['errors'] = array("Session Error.");

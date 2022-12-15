@@ -1,10 +1,18 @@
 <?php
-session_start();
-require_once("../ValidationWizard.php");
-require_once(__DIR__.'/../SplitPageTemplate.php');
-require_once(__DIR__.'/../const.php');
-require_once(__DIR__.'/../WebServiceClient.php');
+/*
+Page Description: GET version of Enroll into Course for Student users. Displays a confirmation page for a student to enroll into a course.
+*/
 
+session_start();
+require_once(__DIR__.'/../SplitPageTemplate.php');
+require_once(__DIR__.'/../WebServiceClient.php');
+require_once(__DIR__.'/../const.php');
+require_once(__DIR__.'/../ValidationWizard.php');
+
+$VW = new ValidationWizard();
+$template = new SplitPageTemplate("Enrollment Confirmation");
+
+// Validation
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
     session_error();
 }
@@ -64,9 +72,6 @@ if($course == null){
     die(header("Location: searchresults.php"));
 }
 
-$VW = new ValidationWizard();
-$template = new SplitPageTemplate("Enrollment Confirmation");
-
 // PRINT HTML
 print $template->beginHTML();
 print $template->openMainNavigation($role);
@@ -80,14 +85,14 @@ print '<h3>Course Enrollment</h3>';
 print '<div><form action="submitEnrollClassStudent.php" method="post">';
 $coursename = $course->coursecode . " " . $course->coursenum . ": " . $course->coursename;
 print "<h5>" . $coursename . "</h5>";
-print '<ul><li><p class="h6">Description: ' . $class->coursedesc . '</p></li>';
-print '<li><p class="h6">Instructor: ' . $class->courseinstr . '</p></li>';
-print '<li><p class="h6">Credits: ' . $class->coursecredits . '</p></li>';
-print '<li><p class="h6">Meeting Times: ' . $class->meetingtimes . '</p></li>';
-print '<li><p class="h6">Max Enrollment: ' . $class->maxenroll . '</p></li></ul>';
+print '<ul><li><p class="h6">Description: ' . $course->coursedesc . '</p></li>';
+print '<li><p class="h6">Instructor: ' . $course->courseinstr . '</p></li>';
+print '<li><p class="h6">Credits: ' . $course->coursecredits . '</p></li>';
+print '<li><p class="h6">Meeting Times: ' . $course->meetingtimes . '</p></li>';
+print '<li><p class="h6">Max Enrollment: ' . $course->maxenroll . '</p></li></ul>';
 print '<input type="hidden" name="coursename" value="' . $coursename . '">';
 print '<input type="hidden" name="student_id" value="' . $user->id . '">';
-print '<input type="hidden" name="max" value="' . $class->maxenroll . '">';
+print '<input type="hidden" name="max" value="' . $course->maxenroll . '">';
 print '<button type="submit" name="enroll_id" class="btn btn-danger button" value="' . $course->id . '">Confirm Enrollment</button>';
 print '<a href="searchresults.php" class="btn btn-danger button m-2">Cancel</a>';
 print '</form></div></div></main></div>';

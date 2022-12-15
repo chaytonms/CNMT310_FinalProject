@@ -1,10 +1,12 @@
 <?php
-session_start();
+/*
+Page Description: POST version of Add Course for Admin users. Handles the webservice process of adding a new course to the system (not a viewable page).
+*/
 
+session_start();
 require_once(__DIR__.'/../WebServiceClient.php');
-require_once("../ValidationWizard.php");
 require_once(__DIR__.'/../const.php');
-$VW = new ValidationWizard();
+require_once(__DIR__.'/../ValidationWizard.php');
 
 // ### data fields: ###
 //    "coursename": "Principles of Computing", 
@@ -14,10 +16,33 @@ $VW = new ValidationWizard();
 //     "coursedesc": "Exploring the principles of computing", 
 //    "courseinstr": "Simkins", 
 //     "meetingtimes": "MW 11:00a-12:15p", 
-//     "maxenroll": "24"  
+//     "maxenroll": "24"
 
-if (!isset($_POST) || !isset($_SESSION)) {
-    session_error();
+// Validation
+if (!isset($_SESSION) || !isset($_SESSION['user'])) {
+  session_error();
+}
+
+$user = json_decode($_SESSION['user']);
+
+if (!isset($user->user_role)) {
+  session_error();
+}
+
+if ($user->user_role != "admin") {
+  forbidden_error();
+}
+
+if(!isset($_POST['coursename']) || empty($_POST['coursename'])
+|| !isset($_POST['coursecode']) || empty($_POST['coursecode'])
+|| !isset($_POST['coursenum']) || empty($_POST['coursenum'])
+|| !isset($_POST['coursecredits']) || empty($_POST['coursecredits'])
+|| !isset($_POST['coursedesc']) || empty($_POST['coursedesc'])
+|| !isset($_POST['meetingtimes']) || empty($_POST['meetingtimes'])
+|| !isset($_POST['maxenroll']) || empty($_POST['maxenroll'])
+|| !isset($_POST['courseinstr']) || empty($_POST['courseinstr'])){
+    $_SESSION['errors'] = array("Make sure all fields are entered.");
+    die(header("Location: addClass.php"));
 }
 
 $formFields = array(
@@ -31,20 +56,6 @@ $formFields = array(
     'maxenroll' => $_POST['maxenroll']
 );
 
-if (!isset($_POST['coursename'], $_POST['coursecode'], 
-    $_POST['coursenum'], $_POST['coursecredits'], $_POST['coursedesc'],
-    $_POST['courseinstr'], $_POST['meetingtimes'], $_POST['maxenroll']) ||
-    $VW->AreEmpty(array_values($formFields))) {
-
-    $_SESSION['errors'] = array("Make sure all fields are entered.");
-    die(header("Location:addClass.php"));
-}
-
-
-if (!isset($_SESSION['user'])) {
-    session_error();      
-}
-
 // make the request to the api
 $url = "http://cnmt310.classconvo.com/classreg/";
 $client = new WebServiceClient($url);
@@ -55,14 +66,13 @@ $postData = array("apikey" => APIKEY,
              "action" => "addcourse"
              );
 
-
 $client->setPostFields($postData);
 $json = (object) json_decode($client->send());
 
-if ($json == null || !isset($json->result) || $json->result != "Success") { // might need more checks
+if ($json == null || !isset($json->result) || $json->result != "Success") {
     $_SESSION['errors'] = array("Error with adding class.");
     die(header("Location:addClass.php"));
-} else { // ik this not needed but since they are linked logically I like to have it
+} else {
     unset($_SESSION['errors']);
     $_SESSION['successes'] = array("Success adding a class!");
     die(header("Location:dashboard.php"));

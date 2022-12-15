@@ -1,10 +1,14 @@
 <?php
-require_once(__DIR__.'/../WebServiceClient.php');
-require_once(__DIR__.'/../const.php');
-require_once(__DIR__ . '/../ValidationWizard.php');
+/*
+Page Description: POST version of Delete Course for Admin users. Handles the webservice process of deleting a course from the system (not a viewable page).
+*/
 
 session_start();
+require_once(__DIR__.'/../WebServiceClient.php');
+require_once(__DIR__.'/../const.php');
+require_once(__DIR__.'/../ValidationWizard.php');
 
+// Validation
 if (!isset($_SESSION) || !isset($_SESSION['user'])) {
     session_error();
 }
