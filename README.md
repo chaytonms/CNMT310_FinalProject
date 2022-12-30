@@ -1,8 +1,11 @@
 # CNMT310_FinalProject
-Asana Board has project details
-Make sure to branch from main before making changes. Get changes tested
-and peer reviewed before merging to master/main.
+Course Registration Application
+Roles
+* Admin
+* Student
+* Guest
 
-
-# Links
-cnmtsrv2.uwsp.edu/~USERID 
+## Role Functions
+* Admins can perform add, delete, manage, and search courses.
+* Students can enroll in courses, drop courses, and search courses.
+* Guests can search courses
